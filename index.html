@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <meta
+      name="description"
+      content="Kakeibo - Mindful Money Tracker. Track less. Reflect more. Save with intention."
+    />
+    <meta name="theme-color" content="#2D5016" />
+    <title>Kakeibo - Mindful Money Tracker</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ONBOARDING OVERLAY -->
+    <div id="onboarding" class="onboarding-overlay hidden">
+      <div class="onboarding-container">
+        <div class="onboarding-step active" id="step-1">
+          <div class="onboarding-art">
+            <div class="brushstroke-circle"></div>
+            <div class="kanji-display">家計簿</div>
+          </div>
+          <h1 class="onboarding-title">Kakeibo</h1>
+          <p class="onboarding-subtitle">
+            The 100-year-old Japanese art of mindful budgeting. Track less.
+            Reflect more. Save with intention.
+          </p>
+          <div class="privacy-badge">
+            <span class="privacy-icon"
+              ><svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg
+            ></span>
+            <span>Your data stays yours. No accounts linked—ever.</span>
+          </div>
+          <button class="btn-primary" onclick="nextStep(2)">
+            Begin My Journey
+          </button>
+        </div>
+
+        <div class="onboarding-step" id="step-2">
+          <h2 class="step-title">Choose Your Base Currency</h2>
+          <p class="step-desc">
+            All amounts will be displayed in this currency. You can always track
+            in any currency worldwide.
+          </p>
+          <div class="currency-search-wrap">
+            <input
+              type="text"
+              id="currencySearch"
+              placeholder="Search currencies..."
+              oninput="filterCurrencies(this.value)"
+            />
+          </div>
+          <div class="currency-list" id="currencyList"></div>
+          <button
+            class="btn-primary"
+            onclick="nextStep(3)"
+            id="currencyNextBtn"
+            disabled
+          >
+            Continue
+          </button>
+        </div>
+
+        <div class="onboarding-step" id="step-3">
+          <h2 class="step-title">Set Up This Month</h2>
+          <p class="step-desc">
+            The Kakeibo method starts with intention. How much do you expect to
+            earn this month?
+          </p>
+          <div class="setup-form">
+            <div class="form-group">
+              <label>Monthly Income</label>
+              <div class="amount-input-wrap">
+                <span class="currency-prefix" id="incomeCurrencyPrefix">$</span>
+                <input
+                  type="number"
+                  id="monthlyIncome"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Savings Goal</label>
+              <div class="amount-input-wrap">
+                <span class="currency-prefix" id="savingsCurrencyPrefix"
+                  >$</span
+                >
+                <input
+                  type="number"
+                  id="savingsGoal"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+            </div>
+            <div class="savings-tip">
+              <span
+                ><svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M9 18h6" />
+                  <path d="M10 22h4" />
+                  <path
+                    d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.9-3.5 6.2-.5.3-.5.8-.5 1.3v.5H9v-.5c0-.5 0-1-.5-1.3A7 7 0 0 1 12 2z"
+                  /></svg
+              ></span>
+              <span>Kakeibo recommends saving at least 10–20% of income</span>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="completeOnboarding()">
+            Start Tracking
+          </button>
+        </div>
+
+        <div class="step-dots">
+          <div class="dot active" id="dot-1"></div>
+          <div class="dot" id="dot-2"></div>
+          <div class="dot" id="dot-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app" class="app hidden">
+      <!-- TOP BAR -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <span class="app-logo">家計簿</span>
+          <span class="app-name">Kakeibo</span>
+        </div>
+        <div class="top-bar-right">
+          <button
+            class="icon-btn"
+            onclick="toggleTheme()"
+            title="Toggle theme"
+            id="themeBtn"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+          </button>
+          <button class="icon-btn" onclick="openSettings()" title="Settings">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- SCREEN CONTAINER -->
+      <main class="screen-container">
+        <!-- ═══════════════════════════════ DASHBOARD ═══════════════════════════════ -->
+        <section class="screen active" id="screen-home">
+          <div class="screen-scroll">
+            <div class="dashboard-header">
+              <div class="month-nav">
+                <button class="nav-arrow" onclick="changeMonth(-1)">‹</button>
+                <div class="current-month" id="dashMonth">March 2026</div>
+                <button class="nav-arrow" onclick="changeMonth(1)">›</button>
+              </div>
+              <div class="kakeibo-quote" id="kakeiboQuote">
+                "What is your income this month?"
+              </div>
+            </div>
+
+            <div class="budget-overview-card">
+              <div class="budget-ring-wrap">
+                <canvas id="budgetRing" width="160" height="160"></canvas>
+                <div class="ring-center">
+                  <div class="ring-label">Remaining</div>
+                  <div class="ring-amount" id="remainingAmount">¥0</div>
+                </div>
+              </div>
+              <div class="budget-stats">
+                <div class="stat-row">
+                  <span class="stat-dot income"></span>
+                  <span class="stat-label">Income</span>
+                  <span class="stat-val" id="statIncome">—</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-dot spent"></span>
+                  <span class="stat-label">Spent</span>
+                  <span class="stat-val" id="statSpent">—</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-dot savings"></span>
+                  <span class="stat-label">Saved</span>
+                  <span class="stat-val" id="statSaved">—</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="categories-grid" id="categoriesGrid">
+              <!-- dynamically filled -->
+            </div>
+
+            <div class="daily-prompt-card" id="dailyPromptCard">
+              <div class="prompt-label">Today's Reflection</div>
+              <div class="prompt-text" id="dailyPrompt">
+                Loading your daily prompt...
+              </div>
+              <button class="prompt-cta" onclick="switchTab('reflect')">
+                Reflect Now →
+              </button>
+            </div>
+
+            <div class="recent-expenses">
+              <div class="section-header">
+                <span>Recent Entries</span>
+                <button class="see-all-btn" onclick="switchTab('ledger')">
+                  See all
+                </button>
+              </div>
+              <div id="recentExpensesList" class="expense-list">
+                <div class="empty-state">
+                  <div class="empty-icon">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"
+                      />
+                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+                      <line x1="8" y1="10" x2="16" y2="10" />
+                      <line x1="8" y1="14" x2="16" y2="14" />
+                      <line x1="8" y1="18" x2="12" y2="18" />
+                    </svg>
+                  </div>
+                  <div>No entries yet this month</div>
+                  <div class="empty-sub">Tap + to log your first expense</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════ TRACK ═══════════════════════════════ -->
+        <section class="screen" id="screen-track">
+          <div class="screen-scroll">
+            <div class="track-header">
+              <h2>Log Expense</h2>
+              <p>Every entry is an act of mindfulness</p>
+            </div>
+
+            <div class="track-form">
+              <div class="amount-hero">
+                <div class="amount-currency-select">
+                  <select id="trackCurrency" onchange="updateTrackPreview()">
+                    <!-- filled by JS -->
+                  </select>
+                </div>
+                <input
+                  type="number"
+                  id="trackAmount"
+                  class="amount-hero-input"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  oninput="updateTrackPreview()"
+                />
+                <div class="conversion-preview" id="conversionPreview"></div>
+              </div>
+
+              <div class="form-section">
+                <label class="form-label">Category</label>
+                <div class="category-picker" id="categoryPicker">
+                  <button
+                    class="cat-btn active"
+                    data-cat="needs"
+                    onclick="selectCategory(this, 'needs')"
+                  >
+                    <span class="cat-icon"
+                      ><svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"
+                        />
+                        <path d="M9 21V12h6v9" /></svg></span
+                    ><span>Needs</span>
+                  </button>
+                  <button
+                    class="cat-btn"
+                    data-cat="wants"
+                    onclick="selectCategory(this, 'wants')"
+                  >
+                    <span class="cat-icon">✨</span><span>Wants</span>
+                  </button>
+                  <button
+                    class="cat-btn"
+                    data-cat="culture"
+                    onclick="selectCategory(this, 'culture')"
+                  >
+                    <span class="cat-icon">🎭</span><span>Culture</span>
+                  </button>
+                  <button
+                    class="cat-btn"
+                    data-cat="savings"
+                    onclick="selectCategory(this, 'savings')"
+                  >
+                    <span class="cat-icon">🌱</span><span>Savings</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <label class="form-label">Sub-tag</label>
+                <div class="subtag-wrap">
+                  <select id="subTagSelect">
+                    <option value="">Choose a tag...</option>
+                  </select>
+                  <button class="add-tag-btn" onclick="openCustomTag()">
+                    + New
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <label class="form-label">Note</label>
+                <div class="note-suggestions" id="noteSuggestions"></div>
+                <input
+                  type="text"
+                  id="trackNote"
+                  class="note-input"
+                  placeholder="What was this for?"
+                  oninput="showNoteSuggestions(this.value)"
+                />
+              </div>
+
+              <div class="form-section">
+                <label class="form-label">Date</label>
+                <input type="date" id="trackDate" class="date-input" />
+              </div>
+
+              <div class="form-section recurring-section">
+                <label class="toggle-label">
+                  <span>Recurring expense</span>
+                  <div class="toggle" onclick="toggleRecurring(this)">
+                    <div class="toggle-thumb"></div>
+                  </div>
+                </label>
+                <div class="recurring-opts hidden" id="recurringOpts">
+                  <select id="recurringFreq">
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly" selected>Monthly</option>
+                    <option value="yearly">Yearly</option>
+                  </select>
+                </div>
+              </div>
+
+              <button class="btn-primary btn-full" onclick="saveExpense()">
+                <span>Save Entry</span>
+                <span class="btn-kanji">記録</span>
+              </button>
+
+              <div class="csv-section">
+                <button
+                  class="btn-ghost"
+                  onclick="document.getElementById('csvUpload').click()"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                    />
+                    <line x1="12" y1="11" x2="12" y2="17" />
+                    <line x1="9" y1="14" x2="15" y2="14" />
+                  </svg>
+                  Bulk Import via CSV
+                </button>
+                <input
+                  type="file"
+                  id="csvUpload"
+                  accept=".csv"
+                  onchange="importCSV(event)"
+                  hidden
+                />
+                <button class="btn-ghost" onclick="exportCSV()">
+                  ⬇️ Export CSV
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- LEDGER  -->
+        <section class="screen" id="screen-ledger">
+          <div class="screen-scroll">
+            <div class="ledger-header">
+              <div class="month-nav">
+                <button class="nav-arrow" onclick="changeLedgerMonth(-1)">
+                  ‹
+                </button>
+                <div class="current-month" id="ledgerMonth">March 2026</div>
+                <button class="nav-arrow" onclick="changeLedgerMonth(1)">
+                  ›
+                </button>
+              </div>
+            </div>
+
+            <div class="ledger-plan-card">
+              <div class="plan-row">
+                <span>Monthly Income</span>
+                <span id="ledgerIncome" class="plan-val">—</span>
+              </div>
+              <div class="plan-row">
+                <span>Savings Goal</span>
+                <span id="ledgerSavingsGoal" class="plan-val green">—</span>
+              </div>
+              <div class="plan-row">
+                <span>Available to Spend</span>
+                <span id="ledgerAvailable" class="plan-val">—</span>
+              </div>
+              <div class="plan-divider"></div>
+              <div class="plan-row total-row">
+                <span>Total Spent</span>
+                <span id="ledgerTotalSpent" class="plan-val red">—</span>
+              </div>
+            </div>
+
+            <div class="category-breakdown" id="categoryBreakdown">
+              <!-- filled by JS -->
+            </div>
+
+            <div class="ledger-entries-section">
+              <div class="section-header">
+                <span>All Entries</span>
+                <div class="filter-wrap">
+                  <select id="ledgerFilter" onchange="renderLedger()">
+                    <option value="all">All Categories</option>
+                    <option value="needs">Needs</option>
+                    <option value="wants">Wants</option>
+                    <option value="culture">Culture</option>
+                    <option value="savings">Savings</option>
+                  </select>
+                </div>
+              </div>
+              <div id="ledgerList" class="expense-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- REFLECT -->
+        <section class="screen" id="screen-reflect">
+          <div class="screen-scroll">
+            <div class="reflect-header">
+              <h2>Reflect</h2>
+              <p>The heart of the Kakeibo method</p>
+            </div>
+
+            <div class="reflect-tabs">
+              <button
+                class="reflect-tab active"
+                onclick="switchReflectTab(this, 'weekly')"
+              >
+                Weekly
+              </button>
+              <button
+                class="reflect-tab"
+                onclick="switchReflectTab(this, 'monthly')"
+              >
+                Monthly
+              </button>
+            </div>
+
+            <div class="reflect-content" id="reflectContent">
+              <!-- Weekly prompts -->
+              <div id="weeklyReflect">
+                <div class="week-selector">
+                  <button class="nav-arrow" onclick="changeWeek(-1)">‹</button>
+                  <span id="weekLabel">This Week</span>
+                  <button class="nav-arrow" onclick="changeWeek(1)">›</button>
+                </div>
+                <div class="week-summary" id="weekSummary"></div>
+                <div class="prompts-list" id="weeklyPrompts"></div>
+                <button
+                  class="btn-primary btn-full"
+                  onclick="saveWeeklyReflection()"
+                >
+                  Save Reflection
+                </button>
+              </div>
+
+              <!-- Monthly prompts -->
+              <div id="monthlyReflect" class="hidden">
+                <div
+                  class="month-summary-reflect"
+                  id="monthSummaryReflect"
+                ></div>
+                <div class="prompts-list" id="monthlyPrompts"></div>
+
+                <div class="ai-insight-section">
+                  <div class="ai-badge">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"
+                      />
+                    </svg>
+                    AI Insight
+                  </div>
+                  <p>
+                    <i style="size: small">Coming soon</i>
+                  </p>
+                  <!-- <p class="ai-desc">Let Kakeibo AI analyze your month and offer a mindful summary</p>
+                <button class="btn-ai" onclick="generateAIInsight()" id="aiInsightBtn">
+                  <span id="aiInsightBtnText">Generate Insight</span>
+                </button>
+                <div class="ai-result hidden" id="aiResult">
+                  <div class="ai-result-text" id="aiResultText"></div>
+                </div> -->
+                </div>
+
+                <button
+                  class="btn-primary btn-full"
+                  onclick="saveMonthlyReflection()"
+                >
+                  Save Reflection
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════ GOALS ═══════════════════════════════ -->
+        <section class="screen" id="screen-goals">
+          <div class="screen-scroll">
+            <div class="goals-header">
+              <h2>Goals</h2>
+              <p>Save with intention, celebrate with joy</p>
+            </div>
+
+            <button class="btn-primary btn-full" onclick="openGoalModal()">
+              + Add New Goal
+            </button>
+
+            <div id="goalsList" class="goals-list">
+              <div class="empty-state">
+                <div class="empty-icon">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      d="M12 2a3 3 0 0 1 3 3 3 3 0 0 1 3-3 3 3 0 0 1 0 6 3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 0-6 3 3 0 0 1 3 3 3 3 0 0 1 3-3z"
+                    />
+                  </svg>
+                </div>
+                <div>No goals yet</div>
+                <div class="empty-sub">Set your first savings goal above</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- FAB -->
+      <button class="fab" onclick="switchTab('track')" title="Log expense">
+        <span class="fab-icon">+</span>
+      </button>
+
+      <!-- BOTTOM NAV -->
+      <nav class="bottom-nav">
+        <button
+          class="nav-item active"
+          onclick="switchTab('home')"
+          id="nav-home"
+        >
+          <span class="nav-icon">⊞</span>
+          <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('track')" id="nav-track">
+          <span class="nav-icon">✎</span>
+          <span class="nav-label">Track</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('ledger')" id="nav-ledger">
+          <span class="nav-icon">≡</span>
+          <span class="nav-label">Ledger</span>
+        </button>
+        <button
+          class="nav-item"
+          onclick="switchTab('reflect')"
+          id="nav-reflect"
+        >
+          <span class="nav-icon">◯</span>
+          <span class="nav-label">Reflect</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('goals')" id="nav-goals">
+          <span class="nav-icon">◈</span>
+          <span class="nav-label">Goals</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- MODALS -->
+    <div
+      id="modalOverlay"
+      class="modal-overlay hidden"
+      onclick="closeModal(event)"
+    >
+      <!-- Goal Modal -->
+      <div class="modal" id="goalModal">
+        <div class="modal-header">
+          <h3>New Savings Goal</h3>
+          <button class="modal-close" onclick="closeAllModals()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Goal Name</label>
+            <input
+              type="text"
+              id="goalName"
+              placeholder="e.g. Emergency Fund, Vacation..."
+            />
+          </div>
+          <div class="form-group">
+            <label
+              >Target Amount (<span id="goalCurrencyLabel">USD</span>)</label
+            >
+            <input
+              type="number"
+              id="goalTarget"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+          </div>
+          <div class="form-group">
+            <label>Deadline (optional)</label>
+            <input type="date" id="goalDeadline" />
+          </div>
+          <div class="form-group">
+            <label>Emoji Icon</label>
+            <div class="emoji-grid" id="goalEmojiGrid">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M12 2a3 3 0 0 1 3 3 3 3 0 0 1 3-3 3 3 0 0 1 0 6 3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 0-6 3 3 0 0 1 3 3 3 3 0 0 1 3-3z"
+                />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"
+                />
+                <path d="M9 21V12h6v9" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.8 19.2L16 11l3.5-3.5A2 2 0 0 0 17 4.5L13.5 8 5 6l-1.5 1.5 6 3.5L7 13l-2-.5L3.5 14l3 1.5 1.5 3 1.5-1.5L9 15l2.5-2 3.5 6z"
+                />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 17H3v-5l2-5h14l2 5v5h-2" />
+                <circle cx="7.5" cy="17.5" r="2.5" />
+                <circle cx="16.5" cy="17.5" r="2.5" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M2 20h20" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="7" r="4" />
+                <path d="M8 11v4a4 4 0 0 0 8 0v-4" />
+                <path d="M9 21h6" />
+                <path d="M12 19v2" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8a6 6 0 0 0-12 0" />
+                <path d="M6 8l6 13 6-13" />
+                <line x1="2" y1="21" x2="22" y2="21" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 12 20 22 4 22 4 12" />
+                <rect x="2" y="7" width="20" height="5" />
+                <path
+                  d="M12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"
+                />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="15" r="7" />
+                <path d="M8.5 8.5L9 6l3-3 3 3 .5 2.5" />
+                <path d="M8.5 8.5h7" />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path
+                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                />
+              </svg>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M6 4v16M18 4v16" />
+                <path d="M3 8h3M18 8h3M3 16h3M18 16h3" />
+                <line x1="6" y1="12" x2="18" y2="12" />
+              </svg>
+            </div>
+            <input type="text" id="goalEmoji" placeholder="🌸" maxlength="2" />
+          </div>
+          <button class="btn-primary btn-full" onclick="saveGoal()">
+            Create Goal
+          </button>
+        </div>
+      </div>
+
+      <!-- Settings Modal -->
+      <div class="modal" id="settingsModal">
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <button class="modal-close" onclick="closeAllModals()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <div class="settings-label">Base Currency</div>
+            <select
+              id="settingsCurrency"
+              onchange="updateBaseCurrency(this.value)"
+            ></select>
+          </div>
+          <div class="settings-section">
+            <div class="settings-label">Monthly Income</div>
+            <input
+              type="number"
+              id="settingsIncome"
+              placeholder="0.00"
+              onchange="updateMonthlyIncome(this.value)"
+            />
+          </div>
+          <div class="settings-section">
+            <div class="settings-label">Savings Goal</div>
+            <input
+              type="number"
+              id="settingsSavings"
+              placeholder="0.00"
+              onchange="updateSavingsGoal(this.value)"
+            />
+          </div>
+          <div class="settings-section danger-zone">
+            <div class="settings-label">Data</div>
+            <button class="btn-ghost danger" onclick="clearAllData()">
+              Clear All Data
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Tag Modal -->
+      <div class="modal" id="customTagModal">
+        <div class="modal-header">
+          <h3>Add Custom Tag</h3>
+          <button class="modal-close" onclick="closeAllModals()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Tag Name</label>
+            <input
+              type="text"
+              id="customTagInput"
+              placeholder="e.g. Coffee, Gym, Transport..."
+            />
+          </div>
+          <button class="btn-primary btn-full" onclick="saveCustomTag()">
+            Add Tag
+          </button>
+        </div>
+      </div>
+
+      <!-- Goal Log Modal -->
+      <div class="modal" id="goalLogModal">
+        <div class="modal-header">
+          <h3>Log Progress</h3>
+          <button class="modal-close" onclick="closeAllModals()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Amount to Add</label>
+            <input
+              type="number"
+              id="goalLogAmount"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+          </div>
+          <input type="hidden" id="goalLogId" />
+          <button class="btn-primary btn-full" onclick="logGoalProgress()">
+            Add Progress
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- CELEBRATION OVERLAY -->
+    <div id="celebrationOverlay" class="celebration-overlay hidden">
+      <div class="celebration-content">
+        <div class="celebration-emoji" id="celebrationEmoji">🎉</div>
+        <div class="celebration-text" id="celebrationText">Goal Reached!</div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const session = localStorage.getItem("supabaseClient.auth.token");
+      if (!session && !window.location.href.includes("login.html")) {
+        window.location.href = "signin.html";
+      }
+    </script>
+  </body>
+</html>

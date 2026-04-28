@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kakeibo - Create Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="log.css"> 
+  <link rel="stylesheet" href="styles.css"></head>
+<body class="auth-body">
+  <div class="onboarding-container">
+    <div class="kanji-display">家計簿</div>
+    <h1>Join Kakeibo</h1>
+    <p>Begin your journey to mindful spending.</p>
+
+    <form id="signup-form" class="auth-form">
+      <input type="text" id="fullName" placeholder="Full Name" required>
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Email Address" required>
+      <input type="password" id="password" placeholder="Create Password" required>
+      <button type="submit" class="btn-primary btn-full">Create Account</button>
+    </form>
+    
+    <p class="auth-footer">Already have an account? <a href="signin.html">Sign In</a></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
