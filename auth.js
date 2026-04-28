@@ -72,7 +72,7 @@ async function signInUser(email, password) {
     alert("Login failed: " + error.message);
   } else {
     alert("Welcome back!");
-    window.location.href = ("/index.html");
+    window.location.href = ("/");
   }
 }
 
