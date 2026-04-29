@@ -1008,10 +1008,10 @@
       </div>
     </div>
 
-    <script src="app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
     <script>
-      const session = localStorage.getItem("supabaseClient.auth.token");
+      const session = localStorage.getItem("sb-ofzmavdcuqycdhryspmv-auth-token");
       if (!session && !window.location.href.includes("login.html")) {
         window.location.href = "signin.html";
       }
