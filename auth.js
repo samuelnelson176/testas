@@ -79,6 +79,6 @@ async function signInUser(email, password) {
 async function signOutUser() {
   const { error } = await supabaseClient.auth.signOut();
   if (!error) {
-    window.location.href = "signin.html"; 
+    window.location.href = "index.html"; 
   }
 }
