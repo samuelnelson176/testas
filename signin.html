@@ -1,26 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <title>Kakeibo - Login</title>
-  <link rel="stylesheet" href="log.css">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2D5016" />
+  <title>Kakeibo — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="log.css" />
 </head>
 <body class="auth-body">
-  <div class="onboarding-container">
-    <div class="kanji-display">家計簿</div>
-    <h1>Welcome Back</h1>
-    
-    <form id="login-form" class="auth-form">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit" class="btn-primary btn-full">Sign In</button>
-    </form>
-    
-    <p class="auth-footer">New here? <a href="signup.html">Create Account</a></p>
+
+  <div class="auth-card">
+
+    <!-- Header -->
+    <div class="auth-header">
+      <span class="auth-kanji">家計簿</span>
+      <span class="auth-brand">Kakeibo</span>
+      <span class="auth-tagline">Track less. Reflect more. Save with intention.</span>
+    </div>
+
+    <!-- Body -->
+    <div class="auth-body-inner">
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to continue your mindful money journey.</p>
+
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            class="auth-input"
+            type="email"
+            id="email"
+            placeholder="you@example.com"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            class="auth-input"
+            type="password"
+            id="password"
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+
+        <button type="submit" class="btn-auth">Sign In</button>
+      </form>
+
+      <div class="auth-footer">
+        New here? <a href="signup.html">Create an account</a>
+      </div>
+    </div>
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth.js"></script>
+  <script>
+    // Respect saved theme
+    const saved = localStorage.getItem('kakeibo-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
+  </script>
 </body>
 </html>
