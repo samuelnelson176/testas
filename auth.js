@@ -72,13 +72,13 @@ async function signInUser(email, password) {
     alert("Login failed: " + error.message);
   } else {
     alert("Welcome back!");
-    window.location.href = "index.html";
+    window.location.href = "main.html";
   }
 }
 
 async function signOutUser() {
   const { error } = await supabaseClient.auth.signOut();
   if (!error) {
-    window.location.href = "index.html"; 
+    window.location.href = "main.html"; 
   }
 }
