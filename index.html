@@ -810,9 +810,50 @@
       transform: translateY(0);
     }
 
+    /* Hamburger button */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--forest);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      nav { padding: 14px 20px; }
+    @media (max-width: 560px) {
+      nav { padding: 14px 20px; flex-wrap: wrap; }
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        padding: 12px 0 6px;
+        gap: 8px;
+      }
+      .nav-links.open { display: flex; }
+      .btn-ghost, .btn-solid {
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 15px;
+      }
+      .btn-ghost { border: 1.5px solid rgba(74,124,89,0.3); }
       .hero { padding: 100px 20px 70px; }
       .cta-card { padding: 40px 24px; }
       .philosophy-step:not(:last-child)::after { display: none; }
@@ -828,7 +869,10 @@
       <span class="nav-kanji">家計簿</span>
       <span class="nav-name">Kakeibo</span>
     </div>
-    <div class="nav-links">
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a href="signin.html" class="btn-ghost">Sign In</a>
       <a href="signup.html" class="btn-solid">Get Started</a>
     </div>
@@ -1014,7 +1058,7 @@
             </svg>
           </div>
           <h3 class="feature-title">Your Data, Your Privacy</h3>
-          <p class="feature-desc">No ads. No selling your data. Your financial life is yours. Kakeibo stores only what you choose — nothing more.</p>
+          <p class="feature-desc">No selling your data. Your financial life is yours. Kakeibo stores only what you choose — nothing more.</p>
         </div>
 
         <div class="feature-card reveal">
@@ -1083,6 +1127,21 @@
   </footer>
 
   <script>
+    // Hamburger menu
+    const hamburger = document.getElementById('navHamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
