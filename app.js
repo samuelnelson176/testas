@@ -1,5 +1,3 @@
-
-
 const CURRENCIES = [
   { code: "USD", symbol: "$", name: "US Dollar" },
   { code: "EUR", symbol: "€", name: "Euro" },
@@ -521,9 +519,9 @@ async function renderDashboard() {
   document.getElementById("statIncome").textContent = formatMoney(income);
   document.getElementById("statSpent").textContent = formatMoney(totalSpent);
   document.getElementById("statSaved").textContent = formatMoney(savedAmount);
-  document.getElementById("remainingAmount").textContent = formatMoney(
-    Math.max(0, remaining),
-  );
+  document.getElementById("remainingAmount").textContent = formatMoney(Math.max(0, remaining));
+  const spentRing = document.getElementById("spentRingAmount");
+  if (spentRing) spentRing.textContent = formatMoney(totalSpent);
 
   // Draw ring chart
   drawBudgetRing(totalSpent, income);
@@ -539,7 +537,7 @@ async function renderDashboard() {
       );
       const pct = income > 0 ? Math.min(100, (catTotal / income) * 100) : 0;
       return `
-      <div class="cat-card" onclick="switchTab('ledger')">
+      <div class="cat-card" data-cat="${key}" onclick="switchTab('ledger')">
         <div class="cat-card-header">
           <span class="cat-card-icon">${cat.icon}</span>
           <span class="cat-card-name">${cat.label}</span>
@@ -1473,18 +1471,25 @@ async function init() {
 
       if (data) state.profile = data;
 
-      // Hide onboarding UI
-      if (onboarding) onboarding.classList.add("hidden");
-
       // Setup App State
       const baseCurrency = getSetting("baseCurrency") || "USD";
       state.baseCurrency = baseCurrency;
       state.monthlyIncome = getSetting("income_" + state.currentDashMonth) || 0;
       state.savingsGoal = getSetting("savings_" + state.currentDashMonth) || 0;
-      
+
       await fetchExchangeRates(baseCurrency);
-      launchApp();
-      
+
+      const onboarded = getSetting("onboarded");
+      if (!onboarded) {
+        // First time user — show onboarding
+        if (onboarding) onboarding.classList.remove("hidden");
+        renderCurrencyList();
+      } else {
+        // Returning user — go straight to app
+        if (onboarding) onboarding.classList.add("hidden");
+        launchApp();
+      }
+
     } else {
       // USER LOGGED OUT
       state.user = null;
@@ -1498,7 +1503,7 @@ async function init() {
       }
     }
   });
-}
+};
 
 init();
 
