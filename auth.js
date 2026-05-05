@@ -76,7 +76,7 @@ async function signInUser(email, password) {
     showAuthToast("Welcome back!");
     setTimeout(() => {
       window.location.href = "main.html";
-    }, 2000);
+    }, 20);
   }
 };
 
