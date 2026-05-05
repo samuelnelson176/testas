@@ -145,7 +145,7 @@ let state = {
   currentWeekOffset: 0,
   exchangeRates: {},
   activeCategory: "needs",
-  selectedGoalEmoji: "🌸",
+  selectedGoalEmoji: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`,
   onboardingCurrency: null,
 };
 
@@ -1065,31 +1065,31 @@ Keep it personal, warm, and under 200 words. Do not use bullet points.`;
 function renderEmojiGrid() {
   const grid = document.getElementById("goalEmojiGrid");
   if (!grid) return;
-  const emojis = [
-    "🌸",
-    "🏠",
-    "✈️",
-    "🎓",
-    "🚗",
-    "💻",
-    "👶",
-    "🏖️",
-    "🎁",
-    "💍",
-    "🌍",
-    "🏋️",
+  const icons = [
+    { key: "flower",  svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>` },
+    { key: "home",    svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>` },
+    { key: "plane",   svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>` },
+    { key: "grad",    svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/></svg>` },
+    { key: "car",     svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l2-4h10l2 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17" r="2.5"/><circle cx="16.5" cy="17" r="2.5"/></svg>` },
+    { key: "laptop",  svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M2 20h20"/></svg>` },
+    { key: "baby",    svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.582-7 8-7s8 3 8 7"/></svg>` },
+    { key: "beach",   svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="23" y2="18"/><line x1="19.78" y1="10.22" x2="18.36" y2="11.64"/><line x1="23" y1="6" x2="21" y2="6"/><line x1="3" y1="6" x2="1" y2="6"/></svg>` },
+    { key: "gift",    svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 4.8 0 0 1 12 8a4.8 4.8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>` },
+    { key: "ring",    svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="15" r="7"/><path d="M8.5 4.5l1 3h5l1-3"/><path d="M9.5 4.5c0-1.1.9-2 2.5-2s2.5.9 2.5 2"/></svg>` },
+    { key: "globe",   svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>` },
+    { key: "fitness", svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 6.5h1M16.5 6.5h1M6.5 17.5h1M16.5 17.5h1"/><rect x="7.5" y="5" width="9" height="14" rx="2"/><line x1="2" y1="8.5" x2="7.5" y2="8.5"/><line x1="2" y1="15.5" x2="7.5" y2="15.5"/><line x1="16.5" y1="8.5" x2="22" y2="8.5"/><line x1="16.5" y1="15.5" x2="22" y2="15.5"/></svg>` },
   ];
-  grid.innerHTML = emojis
+  grid.innerHTML = icons
     .map(
-      (e) =>
-        `<button type="button" class="emoji-btn ${e === state.selectedGoalEmoji ? "active" : ""}" onclick="selectEmoji('${e}')">${e}</button>`,
+      ({ key, svg }) =>
+        `<button type="button" class="emoji-btn ${svg === state.selectedGoalEmoji ? "active" : ""}" onclick="selectIcon(\`${svg.replace(/`/g, "\`")}\`)">${svg}</button>`,
     )
     .join("");
 }
 
-function selectEmoji(emoji) {
-  state.selectedGoalEmoji = emoji;
-  document.getElementById("goalEmoji").value = emoji;
+function selectIcon(svg) {
+  state.selectedGoalEmoji = svg;
+  document.getElementById("goalEmoji").value = svg;
   renderEmojiGrid();
 }
 
@@ -1098,8 +1098,8 @@ function openGoalModal() {
   document.getElementById("goalName").value = "";
   document.getElementById("goalTarget").value = "";
   document.getElementById("goalDeadline").value = "";
-  document.getElementById("goalEmoji").value = "🌸";
-  state.selectedGoalEmoji = "🌸";
+  document.getElementById("goalEmoji").value = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
+  state.selectedGoalEmoji = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
   renderEmojiGrid();
   showModal("goalModal");
 }
@@ -1111,7 +1111,7 @@ async function saveGoal() {
   const emoji =
     document.getElementById("goalEmoji").value ||
     state.selectedGoalEmoji ||
-    "🌸";
+    `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
 
   if (!name) {
     showToast("Please enter a goal name");
@@ -1136,7 +1136,7 @@ async function saveGoal() {
   await dbPut("goals", goal);
   closeAllModals();
   renderGoals();
-  showToast("🌸 Goal created!");
+  showToast("Goal created!");
 }
 
 async function renderGoals() {
@@ -1145,7 +1145,7 @@ async function renderGoals() {
   if (!goals.length) {
     list.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon">🌸</div>
+        <div class="empty-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
         <div>No goals yet</div>
         <div class="empty-sub">Set your first savings goal above</div>
       </div>`;
@@ -1186,7 +1186,7 @@ async function renderGoals() {
         <div class="goal-card-footer">
           <button class="goal-log-btn" onclick="openGoalLog('${g.id}')">+ Add Progress</button>
         </div>`
-            : `<div style="text-align:center;font-size:13px;color:var(--positive);margin-top:8px;">🎉 Goal achieved!</div>`
+            : `<div style="text-align:center;font-size:13px;color:var(--positive);margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;"><svg viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'/></svg> Goal achieved!</div>`
         }
       </div>`;
     })
@@ -1381,7 +1381,7 @@ function toggleTheme() {
   setSetting("theme", newTheme);
   const icons = {
     light: `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" fill="#C0C0C0"/></svg>`,
-    dark: `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="20" fill="#FF8C00"/></svg>`,
+    dark: `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="#FF8C00"/></svg>`,
   };
 
   document.getElementById("themeBtn").innerHTML =
@@ -1424,7 +1424,7 @@ function showToast(msg) {
 
 function celebrate(emoji, text) {
   const overlay = document.getElementById("celebrationOverlay");
-  document.getElementById("celebrationEmoji").textContent = emoji || "🎉";
+  document.getElementById("celebrationEmoji").innerHTML = emoji || `<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
   document.getElementById("celebrationText").textContent =
     text || "Goal Achieved!";
   overlay.classList.remove("hidden");
@@ -1445,7 +1445,7 @@ async function init() {
   const themeBtn = document.getElementById("themeBtn");
   const icons = {
     light: `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" fill="#C0C0C0"/></svg>`,
-    dark: `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="24" cy="24" r="10" fill="#FF8C00"/></svg>`,
+    dark: `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="#FF8C00"/></svg>`,
   };
   if (themeBtn) themeBtn.innerHTML = savedTheme === "dark" ? icons.dark : icons.light;
 
