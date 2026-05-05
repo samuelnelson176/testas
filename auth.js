@@ -74,9 +74,7 @@ async function signInUser(email, password) {
     showAuthToast("Login failed: " + error.message, "error");
   } else {
     showAuthToast("Welcome back!");
-    setTimeout(() => {
       window.location.href = "main.html";
-    }, 20);
   }
 };
 
