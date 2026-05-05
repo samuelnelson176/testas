@@ -14,6 +14,8 @@ if (signupForm) {
   });
 }
 
+
+
 const signinForm = document.getElementById("login-form");
 if (signinForm) {
   signinForm.addEventListener("submit", async (e) => {
@@ -24,7 +26,6 @@ if (signinForm) {
   });
 }
 
-
 async function signUpNewUser(email, password, username, fullName) {
   // Step 1: Create the user account
   const { data, error } = await supabaseClient.auth.signUp({
@@ -32,35 +33,36 @@ async function signUpNewUser(email, password, username, fullName) {
     password: password,
   });
 
-
   if (error) {
-    alert("Error signing up: " + error.message);
+    showPopup("Error signing up: " + error.message, "error");
     return;
   } else {
-    alert(
-      "Account created! Please check your email to confirm your account.",
-    );
+    showPopup("Account created!");
   }
 
   // Step 2: If auth is successful, save their name and username to your table
   if (data.user) {
-    const { error: profileError } = await supabaseClient.from("profiles").insert([
-      {
-        id: data.user.id,
-        username: username,
-        full_name: fullName,
-      },
-    ]);
+    const { error: profileError } = await supabaseClient
+      .from("profiles")
+      .insert([
+        {
+          id: data.user.id,
+          username: username,
+          full_name: fullName,
+        },
+      ]);
 
     if (profileError) {
       console.error("Error saving profile info:", profileError.message);
+      showPopup("Error saving profile info: " + profileError.message, "error");
     } else {
-      alert("Account created and profile saved!");
-      window.location.href = "signin.html";
+      showPopup("Account created and profile saved!");
+      setTimeout(() => {
+        window.location.href = "signin.html";
+      }, 2000);
     }
   }
 }
-
 
 async function signInUser(email, password) {
   const { data, error } = await supabaseClient.auth.signInWithPassword({
@@ -69,9 +71,9 @@ async function signInUser(email, password) {
   });
 
   if (error) {
-    alert("Login failed: " + error.message);
+    showPopup("Login failed: " + error.message, "error");
   } else {
-    alert("Welcome back!");
+    showPopup("Welcome back!");
     window.location.href = "main.html";
   }
 }
@@ -79,6 +81,26 @@ async function signInUser(email, password) {
 async function signOutUser() {
   const { error } = await supabaseClient.auth.signOut();
   if (!error) {
-    window.location.href = "main.html"; 
+    window.location.href = "signin.html";
   }
+}
+
+function showPopup(message, type = "success") {
+  const popup = document.getElementById("successPopup");
+  const msg = document.getElementById("popupMessage");
+  const icon = document.getElementById("popupIcon");
+
+  msg.textContent = message;
+
+  if (type === "error") {
+    icon.textContent = "✕";
+  } else {
+    icon.textContent = "✓";
+  }
+
+  popup.classList.remove("hidden");
+}
+
+function closePopup() {
+  document.getElementById("successPopup").classList.add("hidden");
 }
