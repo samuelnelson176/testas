@@ -12,7 +12,7 @@
     />
     <meta name="theme-color" content="#2D5016" />
     <title>Kakeibo - Mindful Money Tracker</title>
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
@@ -223,11 +223,15 @@
             </div>
 
             <div class="budget-overview-card">
+              <div class="balance-headline">
+                <div class="balance-label">Available This Month</div>
+                <div class="balance-amount" id="remainingAmount">—</div>
+              </div>
               <div class="budget-ring-wrap">
                 <canvas id="budgetRing" width="160" height="160"></canvas>
                 <div class="ring-center">
-                  <div class="ring-label">Remaining</div>
-                  <div class="ring-amount" id="remainingAmount">¥0</div>
+                  <div class="ring-label">Spent</div>
+                  <div class="ring-amount" id="spentRingAmount">—</div>
                 </div>
               </div>
               <div class="budget-stats">
@@ -902,7 +906,7 @@
                 <line x1="6" y1="12" x2="18" y2="12" />
               </svg>
             </div>
-            <input type="text" id="goalEmoji" placeholder="🌸" maxlength="2" />
+            <input type="text" id="goalEmoji" placeholder="" maxlength="2" />
           </div>
           <button class="btn-primary btn-full" onclick="saveGoal()">
             Create Goal
@@ -1003,7 +1007,7 @@
     <!-- CELEBRATION OVERLAY -->
     <div id="celebrationOverlay" class="celebration-overlay hidden">
       <div class="celebration-content">
-        <div class="celebration-emoji" id="celebrationEmoji">🎉</div>
+        <div class="celebration-emoji" id="celebrationEmoji"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="celebration-text" id="celebrationText">Goal Reached!</div>
       </div>
     </div>
@@ -1014,7 +1018,7 @@
     <script>
       const session = localStorage.getItem("sb-ofzmavdcuqycdhryspmv-auth-token");
       if (!session && !window.location.href.includes("login.html")) {
-        window.location.href = "signin.html";
+        window.location.href = "index.html";
       }
     </script>
   </body>
