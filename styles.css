@@ -244,6 +244,18 @@ input, select, textarea {
 
 .currency-search-wrap {
   margin: 0 0 16px 0;
+  position: relative;
+}
+
+.currency-search-wrap::before {
+  content: '🔍';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .currency-search-wrap input {
@@ -261,11 +273,14 @@ input, select, textarea {
 
 .currency-search-wrap input:focus { 
   border-color: var(--green-mid); 
+  background: var(--surface-0);
+  box-shadow: 0 0 0 3px rgba(62, 107, 33, 0.1);
 }
 
 .currency-search-wrap input::placeholder {
   color: var(--text-muted);
   opacity: 0.6;
+  font-style: italic;
 }
 
 .amount-input-wrap {
