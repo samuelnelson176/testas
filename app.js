@@ -1,46 +1,49 @@
+// ══════════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════════
 const CURRENCIES = [
-  { code: "USD", symbol: "$", name: "US Dollar" },
-  { code: "EUR", symbol: "€", name: "Euro" },
-  { code: "GBP", symbol: "£", name: "British Pound" },
-  { code: "JPY", symbol: "¥", name: "Japanese Yen" },
-  { code: "CAD", symbol: "$", name: "Canadian Dollar" },
-  { code: "AUD", symbol: "$", name: "Australian Dollar" },
-  { code: "CHF", symbol: "₣", name: "Swiss Franc" },
-  { code: "CNY", symbol: "¥", name: "Chinese Yuan" },
-  { code: "INR", symbol: "₹", name: "Indian Rupee" },
-  { code: "NGN", symbol: "₦", name: "Nigerian Naira" },
-  { code: "ZAR", symbol: "R", name: "South African Rand" },
-  { code: "BRL", symbol: "R$", name: "Brazilian Real" },
-  { code: "MXN", symbol: "MX$", name: "Mexican Peso" },
-  { code: "SGD", symbol: "$", name: "Singapore Dollar" },
-  { code: "HKD", symbol: "$", name: "Hong Kong Dollar" },
-  { code: "SEK", symbol: "kr", name: "Swedish Krona" },
-  { code: "NOK", symbol: "kr", name: "Norwegian Krone" },
-  { code: "DKK", symbol: "kr", name: "Danish Krone" },
-  { code: "NZD", symbol: "$", name: "New Zealand Dollar" },
-  { code: "KRW", symbol: "₩", name: "South Korean Won" },
-  { code: "IDR", symbol: "Rp", name: "Indonesian Rupiah" },
-  { code: "MYR", symbol: "RM", name: "Malaysian Ringgit" },
-  { code: "PHP", symbol: "₱", name: "Philippine Peso" },
-  { code: "THB", symbol: "฿", name: "Thai Baht" },
-  { code: "VND", symbol: "₫", name: "Vietnamese Dong" },
-  { code: "AED", symbol: "د.إ", name: "UAE Dirham" },
-  { code: "SAR", symbol: "﷼", name: "Saudi Riyal" },
-  { code: "EGP", symbol: "£", name: "Egyptian Pound" },
-  { code: "KES", symbol: "KSh", name: "Kenyan Shilling" },
-  { code: "GHS", symbol: "₵", name: "Ghanaian Cedi" },
-  { code: "PKR", symbol: "₨", name: "Pakistani Rupee" },
-  { code: "BDT", symbol: "৳", name: "Bangladeshi Taka" },
-  { code: "TRY", symbol: "₺", name: "Turkish Lira" },
-  { code: "PLN", symbol: "zł", name: "Polish Złoty" },
-  { code: "CZK", symbol: "Kč", name: "Czech Koruna" },
-  { code: "HUF", symbol: "Ft", name: "Hungarian Forint" },
-  { code: "RON", symbol: "lei", name: "Romanian Leu" },
-  { code: "UAH", symbol: "₴", name: "Ukrainian Hryvnia" },
-  { code: "CLP", symbol: "CL$", name: "Chilean Peso" },
-  { code: "COP", symbol: "CO$", name: "Colombian Peso" },
-  { code: "PEN", symbol: "S", name: "Peruvian Sol" },
-  { code: "ARS", symbol: "AR$", name: "Argentine Peso" },
+  { code: "USD", symbol: "$",    name: "US Dollar" },
+  { code: "EUR", symbol: "€",    name: "Euro" },
+  { code: "GBP", symbol: "£",    name: "British Pound" },
+  { code: "JPY", symbol: "¥",    name: "Japanese Yen" },
+  { code: "CAD", symbol: "$",    name: "Canadian Dollar" },
+  { code: "AUD", symbol: "$",    name: "Australian Dollar" },
+  { code: "CHF", symbol: "₣",    name: "Swiss Franc" },
+  { code: "CNY", symbol: "¥",    name: "Chinese Yuan" },
+  { code: "INR", symbol: "₹",    name: "Indian Rupee" },
+  { code: "NGN", symbol: "₦",    name: "Nigerian Naira" },
+  { code: "ZAR", symbol: "R",    name: "South African Rand" },
+  { code: "BRL", symbol: "R$",   name: "Brazilian Real" },
+  { code: "MXN", symbol: "MX$",  name: "Mexican Peso" },
+  { code: "SGD", symbol: "$",    name: "Singapore Dollar" },
+  { code: "HKD", symbol: "$",    name: "Hong Kong Dollar" },
+  { code: "SEK", symbol: "kr",   name: "Swedish Krona" },
+  { code: "NOK", symbol: "kr",   name: "Norwegian Krone" },
+  { code: "DKK", symbol: "kr",   name: "Danish Krone" },
+  { code: "NZD", symbol: "$",    name: "New Zealand Dollar" },
+  { code: "KRW", symbol: "₩",    name: "South Korean Won" },
+  { code: "IDR", symbol: "Rp",   name: "Indonesian Rupiah" },
+  { code: "MYR", symbol: "RM",   name: "Malaysian Ringgit" },
+  { code: "PHP", symbol: "₱",    name: "Philippine Peso" },
+  { code: "THB", symbol: "฿",    name: "Thai Baht" },
+  { code: "VND", symbol: "₫",    name: "Vietnamese Dong" },
+  { code: "AED", symbol: "د.إ",  name: "UAE Dirham" },
+  { code: "SAR", symbol: "﷼",    name: "Saudi Riyal" },
+  { code: "EGP", symbol: "£",    name: "Egyptian Pound" },
+  { code: "KES", symbol: "KSh",  name: "Kenyan Shilling" },
+  { code: "GHS", symbol: "₵",    name: "Ghanaian Cedi" },
+  { code: "PKR", symbol: "₨",    name: "Pakistani Rupee" },
+  { code: "BDT", symbol: "৳",    name: "Bangladeshi Taka" },
+  { code: "TRY", symbol: "₺",    name: "Turkish Lira" },
+  { code: "PLN", symbol: "zł",   name: "Polish Złoty" },
+  { code: "CZK", symbol: "Kč",   name: "Czech Koruna" },
+  { code: "HUF", symbol: "Ft",   name: "Hungarian Forint" },
+  { code: "RON", symbol: "lei",  name: "Romanian Leu" },
+  { code: "UAH", symbol: "₴",    name: "Ukrainian Hryvnia" },
+  { code: "CLP", symbol: "CL$",  name: "Chilean Peso" },
+  { code: "COP", symbol: "CO$",  name: "Colombian Peso" },
+  { code: "PEN", symbol: "S",    name: "Peruvian Sol" },
+  { code: "ARS", symbol: "AR$",  name: "Argentine Peso" },
 ];
 
 const CATEGORIES = {
@@ -61,36 +64,16 @@ const CATEGORIES = {
   },
   savings: {
     label: "Savings",
-    icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 4-3 7-7 9-4-2-7-5-7-9a7 7 0 0 1 7-7z"/><path d="M12 6v6"/><path d="M12 16h.01"/></svg>`,
+    icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 4-3 7-7 9-4-2-7-5-7-9a7 7 0 0 1 7-7z"/></svg>`,
     color: "#3E8B7A",
   },
 };
 
 const DEFAULT_SUBTAGS = {
-  needs: [
-    "Rent/Mortgage",
-    "Groceries",
-    "Utilities",
-    "Transport",
-    "Healthcare",
-    "Insurance",
-  ],
-  wants: [
-    "Dining Out",
-    "Shopping",
-    "Entertainment",
-    "Subscriptions",
-    "Beauty",
-    "Hobbies",
-  ],
-  culture: ["Books", "Art", "Music", "Travel", "Courses", "Museums"],
-  savings: [
-    "Emergency Fund",
-    "Retirement",
-    "Investment",
-    "Goal Deposit",
-    "Debt Payment",
-  ],
+  needs:   ["Rent/Mortgage","Groceries","Utilities","Transport","Healthcare","Insurance"],
+  wants:   ["Dining Out","Shopping","Entertainment","Subscriptions","Beauty","Hobbies"],
+  culture: ["Books","Art","Music","Travel","Courses","Museums"],
+  savings: ["Emergency Fund","Retirement","Investment","Goal Deposit","Debt Payment"],
 };
 
 const KAKEIBO_QUOTES = [
@@ -101,9 +84,9 @@ const KAKEIBO_QUOTES = [
   '"The act of writing down expenses is itself a saving."',
   '"Wealth is not about having a lot of money; it is about having a lot of options."',
   '"Small mindful steps lead to great financial freedom."',
-  '"Every yen spent with awareness is a yen well spent."',
-  '"The Kakeibo method: simple tools, profound change."',
   '"Pause before purchase. Reflect before spending."',
+  '"The Kakeibo method: simple tools, profound change."',
+  '"Every expense noted with awareness is a step toward freedom."',
 ];
 
 const WEEKLY_PROMPTS = [
@@ -137,184 +120,215 @@ const DAILY_PROMPTS = [
 // STATE
 // ══════════════════════════════════════════
 let state = {
-  baseCurrency: null,
+  user: null,
+  baseCurrency: "USD",
   monthlyIncome: 0,
   savingsGoal: 0,
-  currentDashMonth: null, // 'YYYY-MM'
+  currentDashMonth: null,
   currentLedgerMonth: null,
   currentWeekOffset: 0,
   exchangeRates: {},
   activeCategory: "needs",
   selectedGoalEmoji: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`,
   onboardingCurrency: null,
+  // Per-month income/savings cache to avoid redundant Supabase reads
+  _budgetCache: {},
 };
 
-let db; // IndexedDB instance
-
 // ══════════════════════════════════════════
-// INDEXEDDB SETUP
+// SUPABASE DATA LAYER
+// Replaces IndexedDB — all data synced to cloud
 // ══════════════════════════════════════════
-function initDB() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open("KakeiboDb", 2);
-    req.onupgradeneeded = (e) => {
-      const d = e.target.result;
-      if (!d.objectStoreNames.contains("expenses")) {
-        const es = d.createObjectStore("expenses", { keyPath: "id" });
-        es.createIndex("month", "month", { unique: false });
-      }
-      if (!d.objectStoreNames.contains("reflections")) {
-        d.createObjectStore("reflections", { keyPath: "id" });
-      }
-      if (!d.objectStoreNames.contains("goals")) {
-        d.createObjectStore("goals", { keyPath: "id" });
-      }
-      if (!d.objectStoreNames.contains("settings")) {
-        d.createObjectStore("settings", { keyPath: "key" });
-      }
-    };
-    req.onsuccess = (e) => {
-      db = e.target.result;
-      resolve();
-    };
-    req.onerror = reject;
-  });
+
+// ── Expenses ──
+async function dbGetExpensesByMonth(month) {
+  const { data, error } = await supabaseClient
+    .from("expenses")
+    .select("*")
+    .eq("user_id", state.user.id)
+    .eq("month", month)
+    .order("date", { ascending: false });
+  if (error) { console.error("dbGetExpensesByMonth:", error.message); return []; }
+  return data || [];
 }
 
-function dbGet(store, key) {
-  return new Promise((resolve) => {
-    const tx = db.transaction(store, "readonly");
-    const req = tx.objectStore(store).get(key);
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => resolve(null);
-  });
+async function dbGetAllExpenses() {
+  const { data, error } = await supabaseClient
+    .from("expenses")
+    .select("*")
+    .eq("user_id", state.user.id)
+    .order("date", { ascending: false });
+  if (error) { console.error("dbGetAllExpenses:", error.message); return []; }
+  return data || [];
 }
 
-function dbPut(store, value) {
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(store, "readwrite");
-    const req = tx.objectStore(store).put(value);
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = reject;
-  });
+async function dbSaveExpense(expense) {
+  const row = {
+    id:             expense.id,
+    user_id:        state.user.id,
+    amount:         expense.amount,
+    currency:       expense.currency,
+    base_amount:    expense.baseAmount,
+    category:       expense.category,
+    sub_tag:        expense.subTag || null,
+    note:           expense.note || null,
+    date:           expense.date,
+    month:          expense.month,
+    recurring:      expense.recurring || false,
+    recurring_freq: expense.recurringFreq || null,
+  };
+  const { error } = await supabaseClient.from("expenses").upsert(row);
+  if (error) throw new Error(error.message);
 }
 
-function dbDelete(store, key) {
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(store, "readwrite");
-    const req = tx.objectStore(store).delete(key);
-    req.onsuccess = () => resolve();
-    req.onerror = reject;
-  });
+async function dbDeleteExpense(id) {
+  const { error } = await supabaseClient
+    .from("expenses")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", state.user.id);
+  if (error) throw new Error(error.message);
 }
 
-function dbGetAll(store) {
-  return new Promise((resolve) => {
-    const tx = db.transaction(store, "readonly");
-    const req = tx.objectStore(store).getAll();
-    req.onsuccess = () => resolve(req.result || []);
-    req.onerror = () => resolve([]);
-  });
+// ── Monthly Budget ──
+async function dbGetBudget(month) {
+  if (state._budgetCache[month]) return state._budgetCache[month];
+  const { data, error } = await supabaseClient
+    .from("monthly_budgets")
+    .select("income, savings_goal")
+    .eq("user_id", state.user.id)
+    .eq("month", month)
+    .single();
+  if (error && error.code !== "PGRST116") console.error("dbGetBudget:", error.message);
+  const result = { income: data?.income || 0, savings_goal: data?.savings_goal || 0 };
+  state._budgetCache[month] = result;
+  return result;
 }
 
-function dbGetByIndex(store, indexName, value) {
-  return new Promise((resolve) => {
-    const tx = db.transaction(store, "readonly");
-    const req = tx.objectStore(store).index(indexName).getAll(value);
-    req.onsuccess = () => resolve(req.result || []);
-    req.onerror = () => resolve([]);
-  });
+async function dbSaveBudget(month, income, savingsGoal) {
+  state._budgetCache[month] = { income, savings_goal: savingsGoal };
+  const { error } = await supabaseClient.from("monthly_budgets").upsert({
+    user_id:      state.user.id,
+    month,
+    income,
+    savings_goal: savingsGoal,
+    currency:     state.baseCurrency,
+  }, { onConflict: "user_id,month" });
+  if (error) console.error("dbSaveBudget:", error.message);
 }
 
-// ══════════════════════════════════════════
-// SETTINGS (localStorage for speed)
-// ══════════════════════════════════════════
-function getSetting(key, fallback = null) {
-  const v = localStorage.getItem("kakeibo_" + key);
-  if (v === null) return fallback;
-  try {
-    return JSON.parse(v);
-  } catch {
-    return v;
-  }
+// ── User Settings ──
+async function dbLoadSettings() {
+  const { data, error } = await supabaseClient
+    .from("user_settings")
+    .select("*")
+    .eq("user_id", state.user.id)
+    .single();
+  if (error && error.code !== "PGRST116") console.error("dbLoadSettings:", error.message);
+  return data || null;
 }
 
-function setSetting(key, val) {
-  localStorage.setItem("kakeibo_" + key, JSON.stringify(val));
+async function dbSaveSettings(patch) {
+  const { error } = await supabaseClient.from("user_settings").upsert({
+    user_id: state.user.id,
+    ...patch,
+  }, { onConflict: "user_id" });
+  if (error) console.error("dbSaveSettings:", error.message);
+}
+
+// ── Goals ──
+async function dbGetGoals() {
+  const { data, error } = await supabaseClient
+    .from("goals")
+    .select("*")
+    .eq("user_id", state.user.id)
+    .order("created_at", { ascending: true });
+  if (error) { console.error("dbGetGoals:", error.message); return []; }
+  return data || [];
+}
+
+async function dbSaveGoal(goal) {
+  const row = {
+    id:       goal.id,
+    user_id:  state.user.id,
+    name:     goal.name,
+    target:   goal.target,
+    current:  goal.current || 0,
+    currency: goal.currency || state.baseCurrency,
+    deadline: goal.deadline || null,
+    emoji:    goal.emoji || null,
+  };
+  const { error } = await supabaseClient.from("goals").upsert(row);
+  if (error) throw new Error(error.message);
+}
+
+async function dbDeleteGoal(id) {
+  const { error } = await supabaseClient
+    .from("goals")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", state.user.id);
+  if (error) throw new Error(error.message);
+}
+
+// ── Reflections ──
+async function dbGetReflection(type, period) {
+  const id = `${type}_${period}`;
+  const { data, error } = await supabaseClient
+    .from("reflections")
+    .select("answers")
+    .eq("id", id)
+    .eq("user_id", state.user.id)
+    .single();
+  if (error && error.code !== "PGRST116") console.error("dbGetReflection:", error.message);
+  return data ? { answers: data.answers } : null;
+}
+
+async function dbSaveReflection(type, period, answers) {
+  const id = `${type}_${period}`;
+  const { error } = await supabaseClient.from("reflections").upsert({
+    id,
+    user_id:  state.user.id,
+    type,
+    period,
+    answers,
+    saved_at: new Date().toISOString(),
+  }, { onConflict: "id,user_id" });
+  if (error) throw new Error(error.message);
 }
 
 // ══════════════════════════════════════════
 // CURRENCY
 // ══════════════════════════════════════════
 function getCurrencySymbol(code) {
-  const c = CURRENCIES.find((c) => c.code === code);
+  const c = CURRENCIES.find(c => c.code === code);
   return c ? c.symbol : code;
 }
 
 async function fetchExchangeRates(base) {
   try {
-    const cached = getSetting("rates_cache");
-    const cacheTime = getSetting("rates_time");
-    if (cached && cacheTime && Date.now() - cacheTime < 3600000) {
-      state.exchangeRates = cached;
-      return;
+    // Use localStorage for a 1-hour cache — rates don't need cloud sync
+    const cached   = localStorage.getItem("kakeibo_rates_cache");
+    const cacheTime = localStorage.getItem("kakeibo_rates_time");
+    if (cached && cacheTime && Date.now() - parseInt(cacheTime) < 3600000) {
+      const parsed = JSON.parse(cached);
+      if (parsed.base === base) { state.exchangeRates = parsed.rates; return; }
     }
-    // Use a CORS-friendly free API
-    const res = await fetch(
-      `https://api.exchangerate-api.com/v4/latest/${base}`,
-    );
+    const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
     if (!res.ok) throw new Error();
     const data = await res.json();
     state.exchangeRates = data.rates;
-    setSetting("rates_cache", data.rates);
-    setSetting("rates_time", Date.now());
+    localStorage.setItem("kakeibo_rates_cache", JSON.stringify({ base, rates: data.rates }));
+    localStorage.setItem("kakeibo_rates_time", Date.now().toString());
   } catch {
-    // Fallback: approximate rates vs USD
     const fallback = {
-      USD: 1,
-      EUR: 0.92,
-      GBP: 0.79,
-      JPY: 149.5,
-      CAD: 1.36,
-      AUD: 1.53,
-      CHF: 0.88,
-      CNY: 7.24,
-      INR: 83.1,
-      NGN: 1540,
-      ZAR: 18.6,
-      BRL: 4.97,
-      MXN: 17.1,
-      SGD: 1.34,
-      HKD: 7.82,
-      SEK: 10.4,
-      NOK: 10.6,
-      DKK: 6.9,
-      NZD: 1.63,
-      KRW: 1325,
-      IDR: 15750,
-      MYR: 4.67,
-      PHP: 56.3,
-      THB: 35.2,
-      VND: 24340,
-      AED: 3.67,
-      SAR: 3.75,
-      EGP: 30.9,
-      KES: 152,
-      GHS: 12.4,
-      PKR: 278,
-      BDT: 109,
-      TRY: 30.4,
-      PLN: 3.97,
-      CZK: 22.8,
-      HUF: 356,
-      RON: 4.6,
-      UAH: 38.2,
-      CLP: 895,
-      COP: 3920,
-      PEN: 3.72,
-      ARS: 350,
+      USD:1,EUR:0.92,GBP:0.79,JPY:149.5,CAD:1.36,AUD:1.53,CHF:0.88,CNY:7.24,
+      INR:83.1,NGN:1540,ZAR:18.6,BRL:4.97,MXN:17.1,SGD:1.34,HKD:7.82,SEK:10.4,
+      NOK:10.6,DKK:6.9,NZD:1.63,KRW:1325,IDR:15750,MYR:4.67,PHP:56.3,THB:35.2,
+      VND:24340,AED:3.67,SAR:3.75,EGP:30.9,KES:152,GHS:12.4,PKR:278,BDT:109,
+      TRY:30.4,PLN:3.97,CZK:22.8,HUF:356,RON:4.6,UAH:38.2,CLP:895,COP:3920,
+      PEN:3.72,ARS:350,
     };
-    // Convert to base currency
     const baseRate = fallback[base] || 1;
     state.exchangeRates = {};
     for (const [k, v] of Object.entries(fallback)) {
@@ -332,18 +346,11 @@ function convertToBase(amount, fromCurrency) {
 
 function formatMoney(amount, currencyCode) {
   const code = currencyCode || state.baseCurrency;
-  const sym = getCurrencySymbol(code);
-  const n = parseFloat(amount) || 0;
-  // For large-unit currencies (JPY, KRW, etc.)
-  const noDecimal = ["JPY", "KRW", "IDR", "VND", "HUF"];
-  const decimals = noDecimal.includes(code) ? 0 : 2;
-  return (
-    sym +
-    n.toLocaleString(undefined, {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    })
-  );
+  const sym  = getCurrencySymbol(code);
+  const n    = parseFloat(amount) || 0;
+  const noDecimal = ["JPY","KRW","IDR","VND","HUF"];
+  const decimals  = noDecimal.includes(code) ? 0 : 2;
+  return sym + n.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 }
 
 function getCurrentMonth() {
@@ -353,80 +360,71 @@ function getCurrentMonth() {
 
 function formatMonthDisplay(monthStr) {
   const [y, m] = monthStr.split("-");
-  const d = new Date(parseInt(y), parseInt(m) - 1, 1);
-  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  return new Date(parseInt(y), parseInt(m) - 1, 1)
+    .toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
 // ══════════════════════════════════════════
 // ONBOARDING
 // ══════════════════════════════════════════
 function renderCurrencyList(filter = "") {
-  const list = document.getElementById("currencyList");
-  const filtered = CURRENCIES.filter(
-    (c) =>
-      c.code.toLowerCase().includes(filter.toLowerCase()) ||
-      c.name.toLowerCase().includes(filter.toLowerCase()),
+  const list     = document.getElementById("currencyList");
+  const filtered = CURRENCIES.filter(c =>
+    c.code.toLowerCase().includes(filter.toLowerCase()) ||
+    c.name.toLowerCase().includes(filter.toLowerCase())
   );
-  list.innerHTML = filtered
-    .map(
-      (c) => `
+  list.innerHTML = filtered.map(c => `
     <div class="currency-item ${state.onboardingCurrency === c.code ? "selected" : ""}"
          onclick="selectOnboardingCurrency('${c.code}')">
       <span class="currency-code">${c.symbol} ${c.code}</span>
       <span class="currency-name">${c.name}</span>
     </div>
-  `,
-    )
-    .join("");
+  `).join("");
 }
 
-function filterCurrencies(val) {
-  renderCurrencyList(val);
-}
+function filterCurrencies(val) { renderCurrencyList(val); }
 
 function selectOnboardingCurrency(code) {
   state.onboardingCurrency = code;
   renderCurrencyList(document.getElementById("currencySearch").value);
   document.getElementById("currencyNextBtn").disabled = false;
-  document.getElementById("incomeCurrencyPrefix").textContent =
-    getCurrencySymbol(code);
-  document.getElementById("savingsCurrencyPrefix").textContent =
-    getCurrencySymbol(code);
+  document.getElementById("incomeCurrencyPrefix").textContent  = getCurrencySymbol(code);
+  document.getElementById("savingsCurrencyPrefix").textContent = getCurrencySymbol(code);
 }
 
 function nextStep(n) {
-  document
-    .querySelectorAll(".onboarding-step")
-    .forEach((s) => s.classList.remove("active"));
+  document.querySelectorAll(".onboarding-step").forEach(s => s.classList.remove("active"));
   document.getElementById("step-" + n).classList.add("active");
-  document.querySelectorAll(".dot").forEach((d, i) => {
-    d.classList.toggle("active", i < n);
-  });
+  document.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i < n));
 }
 
 async function completeOnboarding() {
-  const income =
-    parseFloat(document.getElementById("monthlyIncome").value) || 0;
-  const savings = parseFloat(document.getElementById("savingsGoal").value) || 0;
+  const income  = parseFloat(document.getElementById("monthlyIncome").value) || 0;
+  const savings = parseFloat(document.getElementById("savingsGoal").value)   || 0;
 
-  state.baseCurrency = state.onboardingCurrency || "USD";
+  state.baseCurrency  = state.onboardingCurrency || "USD";
   state.monthlyIncome = income;
-  state.savingsGoal = savings;
+  state.savingsGoal   = savings;
 
-  setSetting("baseCurrency", state.baseCurrency);
-  setSetting("onboarded", true);
+  // Save settings to Supabase
+  await dbSaveSettings({ base_currency: state.baseCurrency, onboarded: true, theme: "light" });
 
   const month = getCurrentMonth();
-  setSetting("income_" + month, income);
-  setSetting("savings_" + month, savings);
+  await dbSaveBudget(month, income, savings);
 
   await fetchExchangeRates(state.baseCurrency);
   launchApp();
 }
 
+// ══════════════════════════════════════════
+// APP LAUNCH
+// ══════════════════════════════════════════
 function launchApp() {
-  document.getElementById("onboarding").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
+  const onboarding = document.getElementById("onboarding");
+  const app        = document.getElementById("app");
+  if (onboarding) onboarding.classList.add("hidden");
+  if (app)        app.classList.remove("hidden");
+
   populateCurrencySelects();
   setTodayDate();
   renderAllSubtags();
@@ -436,21 +434,17 @@ function launchApp() {
 }
 
 function populateCurrencySelects() {
-  const selects = ["trackCurrency", "settingsCurrency"];
-  selects.forEach((id) => {
+  ["trackCurrency", "settingsCurrency"].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.innerHTML = CURRENCIES.map(
-      (c) =>
-        `<option value="${c.code}" ${c.code === state.baseCurrency ? "selected" : ""}>${c.code} ${c.symbol}</option>`,
+    el.innerHTML = CURRENCIES.map(c =>
+      `<option value="${c.code}" ${c.code === state.baseCurrency ? "selected" : ""}>${c.code} ${c.symbol}</option>`
     ).join("");
   });
-
-  // Settings values
-  const settingsIncome = document.getElementById("settingsIncome");
-  const settingsSavings = document.getElementById("settingsSavings");
-  if (settingsIncome) settingsIncome.value = state.monthlyIncome || "";
-  if (settingsSavings) settingsSavings.value = state.savingsGoal || "";
+  const si = document.getElementById("settingsIncome");
+  const ss = document.getElementById("settingsSavings");
+  if (si) si.value = state.monthlyIncome || "";
+  if (ss) ss.value = state.savingsGoal   || "";
 }
 
 function setTodayDate() {
@@ -462,20 +456,18 @@ function setTodayDate() {
 // NAVIGATION
 // ══════════════════════════════════════════
 function switchTab(tab) {
-  document
-    .querySelectorAll(".screen")
-    .forEach((s) => s.classList.remove("active"));
-  document
-    .querySelectorAll(".nav-item")
-    .forEach((n) => n.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.querySelectorAll(".sidebar-item").forEach(b => b.classList.remove("active"));
 
   document.getElementById("screen-" + tab)?.classList.add("active");
-  document.getElementById("nav-" + tab)?.classList.add("active");
+  document.getElementById("nav-"    + tab)?.classList.add("active");
+  document.getElementById("snav-"   + tab)?.classList.add("active");
 
-  if (tab === "home") renderDashboard();
-  if (tab === "ledger") renderLedger();
+  if (tab === "home")    renderDashboard();
+  if (tab === "ledger")  renderLedger();
   if (tab === "reflect") renderReflect();
-  if (tab === "goals") renderGoals();
+  if (tab === "goals")   renderGoals();
 }
 
 // ══════════════════════════════════════════
@@ -492,70 +484,55 @@ async function renderDashboard() {
   const month = state.currentDashMonth;
   document.getElementById("dashMonth").textContent = formatMonthDisplay(month);
 
-  // Quote
   const qi = Math.floor(Date.now() / 86400000) % KAKEIBO_QUOTES.length;
   document.getElementById("kakeiboQuote").textContent = KAKEIBO_QUOTES[qi];
 
-  // Daily prompt
   const dp = DAILY_PROMPTS[new Date().getDay() % DAILY_PROMPTS.length];
   document.getElementById("dailyPrompt").textContent = dp;
 
-  // Income / savings for this month
-  const income = getSetting("income_" + month) || state.monthlyIncome || 0;
-  const savingsGoal = getSetting("savings_" + month) || state.savingsGoal || 0;
+  const [budget, expenses] = await Promise.all([
+    dbGetBudget(month),
+    dbGetExpensesByMonth(month),
+  ]);
 
-  // Get expenses
-  const expenses = await dbGetByIndex("expenses", "month", month);
-  const totalSpent = expenses.reduce(
-    (sum, e) => sum + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
+  const income      = parseFloat(budget.income)      || state.monthlyIncome || 0;
+  const savingsGoal = parseFloat(budget.savings_goal) || state.savingsGoal  || 0;
+
+  const totalSpent  = expenses.reduce((s, e) => s + (parseFloat(e.base_amount) || 0), 0);
   const savedAmount = expenses
-    .filter((e) => e.category === "savings")
-    .reduce((sum, e) => sum + (parseFloat(e.baseAmount) || 0), 0);
+    .filter(e => e.category === "savings")
+    .reduce((s, e) => s + (parseFloat(e.base_amount) || 0), 0);
   const remaining = income - totalSpent;
 
-  // Update stats
-  document.getElementById("statIncome").textContent = formatMoney(income);
-  document.getElementById("statSpent").textContent = formatMoney(totalSpent);
-  document.getElementById("statSaved").textContent = formatMoney(savedAmount);
-  document.getElementById("remainingAmount").textContent = formatMoney(Math.max(0, remaining));
+  document.getElementById("statIncome").textContent        = formatMoney(income);
+  document.getElementById("statSpent").textContent         = formatMoney(totalSpent);
+  document.getElementById("statSaved").textContent         = formatMoney(savedAmount);
+  document.getElementById("remainingAmount").textContent   = formatMoney(Math.max(0, remaining));
   const spentRing = document.getElementById("spentRingAmount");
   if (spentRing) spentRing.textContent = formatMoney(totalSpent);
 
-  // Draw ring chart
   drawBudgetRing(totalSpent, income);
 
-  // Category cards
-  const catGrid = document.getElementById("categoriesGrid");
-  catGrid.innerHTML = Object.entries(CATEGORIES)
-    .map(([key, cat]) => {
-      const catExpenses = expenses.filter((e) => e.category === key);
-      const catTotal = catExpenses.reduce(
-        (s, e) => s + (parseFloat(e.baseAmount) || 0),
-        0,
-      );
-      const pct = income > 0 ? Math.min(100, (catTotal / income) * 100) : 0;
-      return `
+  document.getElementById("categoriesGrid").innerHTML = Object.entries(CATEGORIES).map(([key, cat]) => {
+    const catTotal = expenses
+      .filter(e => e.category === key)
+      .reduce((s, e) => s + (parseFloat(e.base_amount) || 0), 0);
+    const pct = income > 0 ? Math.min(100, (catTotal / income) * 100) : 0;
+    return `
       <div class="cat-card" data-cat="${key}" onclick="switchTab('ledger')">
         <div class="cat-card-header">
           <span class="cat-card-icon">${cat.icon}</span>
           <span class="cat-card-name">${cat.label}</span>
         </div>
         <div class="cat-card-amount">${formatMoney(catTotal)}</div>
-        <div class="cat-card-sub">${catExpenses.length} entries</div>
+        <div class="cat-card-sub">${expenses.filter(e => e.category === key).length} entries</div>
         <div class="cat-progress">
           <div class="cat-progress-fill" style="width:${pct}%; background:${cat.color}"></div>
         </div>
-      </div>
-    `;
-    })
-    .join("");
+      </div>`;
+  }).join("");
 
-  // Recent expenses
-  const recent = [...expenses]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 5);
+  const recent = [...expenses].slice(0, 5);
   renderExpenseList("recentExpensesList", recent, true);
 }
 
@@ -563,34 +540,24 @@ function drawBudgetRing(spent, income) {
   const canvas = document.getElementById("budgetRing");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  const cx = 80,
-    cy = 80,
-    r = 68,
-    lw = 10;
+  const cx = 80, cy = 80, r = 68, lw = 10;
 
   ctx.clearRect(0, 0, 160, 160);
 
-  // Background ring
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.strokeStyle =
-    getComputedStyle(document.documentElement)
-      .getPropertyValue("--border")
-      .trim() || "#e0e0d8";
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--border").trim() || "#e0e0d8";
   ctx.lineWidth = lw;
   ctx.stroke();
 
   if (income <= 0) return;
 
   const pct = Math.min(1, spent / income);
-  const startAngle = -Math.PI / 2;
-  const endAngle = startAngle + pct * Math.PI * 2;
-
   ctx.beginPath();
-  ctx.arc(cx, cy, r, startAngle, endAngle);
+  ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + pct * Math.PI * 2);
   ctx.strokeStyle = pct > 0.9 ? "#C4564B" : pct > 0.7 ? "#C4894B" : "#3E6B21";
   ctx.lineWidth = lw;
-  ctx.lineCap = "round";
+  ctx.lineCap   = "round";
   ctx.stroke();
 }
 
@@ -600,9 +567,7 @@ function drawBudgetRing(spent, income) {
 let selectedCategory = "needs";
 
 function selectCategory(btn, cat) {
-  document
-    .querySelectorAll(".cat-btn")
-    .forEach((b) => b.classList.remove("active"));
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   selectedCategory = cat;
   renderAllSubtags();
@@ -611,53 +576,37 @@ function selectCategory(btn, cat) {
 function renderAllSubtags() {
   const select = document.getElementById("subTagSelect");
   if (!select) return;
-  const cat = selectedCategory || "needs";
+  const cat      = selectedCategory || "needs";
   const defaults = DEFAULT_SUBTAGS[cat] || [];
-  const custom = getSetting("custom_tags_" + cat) || [];
-  const all = [...defaults, ...custom];
-  select.innerHTML =
-    '<option value="">Choose a tag...</option>' +
-    all.map((t) => `<option value="${t}">${t}</option>`).join("");
+  const custom   = JSON.parse(localStorage.getItem("kakeibo_custom_tags_" + cat) || "[]");
+  const all      = [...defaults, ...custom];
+  select.innerHTML = '<option value="">Choose a tag...</option>' +
+    all.map(t => `<option value="${t}">${t}</option>`).join("");
 }
 
 function updateTrackPreview() {
-  const amount = parseFloat(document.getElementById("trackAmount").value) || 0;
+  const amount   = parseFloat(document.getElementById("trackAmount").value) || 0;
   const currency = document.getElementById("trackCurrency").value;
-  const preview = document.getElementById("conversionPreview");
+  const preview  = document.getElementById("conversionPreview");
   if (!preview) return;
-
-  if (!amount || currency === state.baseCurrency) {
-    preview.textContent = "";
-    return;
-  }
-  const converted = convertToBase(amount, currency);
-  preview.textContent = `≈ ${formatMoney(converted)} ${state.baseCurrency}`;
+  if (!amount || currency === state.baseCurrency) { preview.textContent = ""; return; }
+  preview.textContent = `≈ ${formatMoney(convertToBase(amount, currency))} ${state.baseCurrency}`;
 }
 
 let noteSuggestionTimer;
 async function showNoteSuggestions(val) {
   clearTimeout(noteSuggestionTimer);
   const container = document.getElementById("noteSuggestions");
-  if (!val || val.length < 2) {
-    container.innerHTML = "";
-    return;
-  }
+  if (!val || val.length < 2) { container.innerHTML = ""; return; }
 
   noteSuggestionTimer = setTimeout(async () => {
-    const all = await dbGetAll("expenses");
-    const notes = [
-      ...new Set(
-        all
-          .map((e) => e.note)
-          .filter((n) => n && n.toLowerCase().includes(val.toLowerCase())),
-      ),
-    ].slice(0, 5);
-    container.innerHTML = notes
-      .map(
-        (n) =>
-          `<span class="suggestion-chip" onclick="document.getElementById('trackNote').value='${n.replace(/'/g, "\\'")}'; document.getElementById('noteSuggestions').innerHTML=''">${n}</span>`,
-      )
-      .join("");
+    const all   = await dbGetAllExpenses();
+    const notes = [...new Set(
+      all.map(e => e.note).filter(n => n && n.toLowerCase().includes(val.toLowerCase()))
+    )].slice(0, 5);
+    container.innerHTML = notes.map(n =>
+      `<span class="suggestion-chip" onclick="document.getElementById('trackNote').value='${n.replace(/'/g, "\\'")}'; document.getElementById('noteSuggestions').innerHTML=''">${n}</span>`
+    ).join("");
   }, 300);
 }
 
@@ -667,54 +616,46 @@ function toggleRecurring(toggle) {
 }
 
 async function saveExpense() {
-  const amount = parseFloat(document.getElementById("trackAmount").value);
+  const amount   = parseFloat(document.getElementById("trackAmount").value);
   const currency = document.getElementById("trackCurrency").value;
-  const note = document.getElementById("trackNote").value.trim();
-  const date =
-    document.getElementById("trackDate").value ||
-    new Date().toISOString().split("T")[0];
-  const subTag = document.getElementById("subTagSelect").value;
-  const isRecurring =
-    document.getElementById("recurringOpts") &&
-    !document.getElementById("recurringOpts").classList.contains("hidden");
-  const recurringFreq = isRecurring
-    ? document.getElementById("recurringFreq").value
-    : null;
+  const note     = document.getElementById("trackNote").value.trim();
+  const date     = document.getElementById("trackDate").value || new Date().toISOString().split("T")[0];
+  const subTag   = document.getElementById("subTagSelect").value;
+  const recurringOptsEl = document.getElementById("recurringOpts");
+  const isRecurring     = recurringOptsEl && !recurringOptsEl.classList.contains("hidden");
+  const recurringFreq   = isRecurring ? document.getElementById("recurringFreq").value : null;
 
-  if (!amount || amount <= 0) {
-    showToast("Please enter an amount");
-    return;
-  }
+  if (!amount || amount <= 0) { showToast("Please enter an amount"); return; }
 
   const baseAmount = convertToBase(amount, currency);
-  const month = date.substring(0, 7);
+  const month      = date.substring(0, 7);
 
   const expense = {
-    id: Date.now().toString(),
+    id:           Date.now().toString(),
     amount,
     currency,
     baseAmount,
-    category: selectedCategory,
+    category:     selectedCategory,
     subTag,
     note,
     date,
     month,
-    recurring: isRecurring,
+    recurring:    isRecurring,
     recurringFreq,
-    createdAt: new Date().toISOString(),
   };
 
-  await dbPut("expenses", expense);
-  showToast("✓ Entry saved");
-
-  // Reset form
-  document.getElementById("trackAmount").value = "";
-  document.getElementById("trackNote").value = "";
-  document.getElementById("noteSuggestions").innerHTML = "";
-  document.getElementById("conversionPreview").textContent = "";
-  setTodayDate();
-
-  renderDashboard();
+  try {
+    await dbSaveExpense(expense);
+    showToast("Entry saved");
+    document.getElementById("trackAmount").value   = "";
+    document.getElementById("trackNote").value     = "";
+    document.getElementById("noteSuggestions").innerHTML = "";
+    document.getElementById("conversionPreview").textContent = "";
+    setTodayDate();
+    renderDashboard();
+  } catch (err) {
+    showToast("Error saving: " + err.message);
+  }
 }
 
 // ══════════════════════════════════════════
@@ -729,61 +670,43 @@ function changeLedgerMonth(dir) {
 
 async function renderLedger() {
   const month = state.currentLedgerMonth;
-  document.getElementById("ledgerMonth").textContent =
-    formatMonthDisplay(month);
+  document.getElementById("ledgerMonth").textContent = formatMonthDisplay(month);
 
-  const income = getSetting("income_" + month) || state.monthlyIncome || 0;
-  const savingsGoal = getSetting("savings_" + month) || state.savingsGoal || 0;
-  const available = income - savingsGoal;
+  const [budget, expenses] = await Promise.all([
+    dbGetBudget(month),
+    dbGetExpensesByMonth(month),
+  ]);
 
-  const filterVal = document.getElementById("ledgerFilter")?.value || "all";
-  let expenses = await dbGetByIndex("expenses", "month", month);
-  const totalSpent = expenses.reduce(
-    (s, e) => s + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
+  const income      = parseFloat(budget.income)      || state.monthlyIncome || 0;
+  const savingsGoal = parseFloat(budget.savings_goal) || state.savingsGoal  || 0;
+  const available   = income - savingsGoal;
+  const totalSpent  = expenses.reduce((s, e) => s + (parseFloat(e.base_amount) || 0), 0);
 
-  document.getElementById("ledgerIncome").textContent = formatMoney(income);
-  document.getElementById("ledgerSavingsGoal").textContent =
-    formatMoney(savingsGoal);
-  document.getElementById("ledgerAvailable").textContent =
-    formatMoney(available);
-  document.getElementById("ledgerTotalSpent").textContent =
-    formatMoney(totalSpent);
+  document.getElementById("ledgerIncome").textContent      = formatMoney(income);
+  document.getElementById("ledgerSavingsGoal").textContent = formatMoney(savingsGoal);
+  document.getElementById("ledgerAvailable").textContent   = formatMoney(available);
+  document.getElementById("ledgerTotalSpent").textContent  = formatMoney(totalSpent);
 
-  // Category breakdown
-  const breakdown = document.getElementById("categoryBreakdown");
-  breakdown.innerHTML = Object.entries(CATEGORIES)
-    .map(([key, cat]) => {
-      const catTotal = expenses
-        .filter((e) => e.category === key)
-        .reduce((s, e) => s + (parseFloat(e.baseAmount) || 0), 0);
-      const pct = income > 0 ? Math.min(100, (catTotal / income) * 100) : 0;
-      return `
+  document.getElementById("categoryBreakdown").innerHTML = Object.entries(CATEGORIES).map(([key, cat]) => {
+    const catTotal = expenses
+      .filter(e => e.category === key)
+      .reduce((s, e) => s + (parseFloat(e.base_amount) || 0), 0);
+    const pct = income > 0 ? Math.min(100, (catTotal / income) * 100) : 0;
+    return `
       <div class="cat-breakdown-item">
         <div class="cat-breakdown-header">
-          <div class="cat-breakdown-name">
-            <span>${cat.icon}</span><span>${cat.label}</span>
-          </div>
+          <div class="cat-breakdown-name"><span>${cat.icon}</span><span>${cat.label}</span></div>
           <div class="cat-breakdown-amount" style="color:${cat.color}">${formatMoney(catTotal)}</div>
         </div>
         <div class="cat-breakdown-bar">
           <div class="cat-breakdown-fill" style="width:${pct}%; background:${cat.color}"></div>
         </div>
-      </div>
-    `;
-    })
-    .join("");
+      </div>`;
+  }).join("");
 
-  // Filtered list
-  const filtered =
-    filterVal === "all"
-      ? expenses
-      : expenses.filter((e) => e.category === filterVal);
-  const sorted = [...filtered].sort(
-    (a, b) => new Date(b.date) - new Date(a.date),
-  );
-  renderExpenseList("ledgerList", sorted, false);
+  const filterVal = document.getElementById("ledgerFilter")?.value || "all";
+  const filtered  = filterVal === "all" ? expenses : expenses.filter(e => e.category === filterVal);
+  renderExpenseList("ledgerList", filtered, false);
 }
 
 function renderExpenseList(containerId, expenses, compact) {
@@ -792,65 +715,59 @@ function renderExpenseList(containerId, expenses, compact) {
   if (!expenses.length) {
     container.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/></svg></div>
+        <div class="empty-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/></svg></div>
         <div>No entries yet</div>
         <div class="empty-sub">Tap + to log your first expense</div>
       </div>`;
     return;
   }
-  container.innerHTML = expenses
-    .map((e) => {
-      const cat = CATEGORIES[e.category] || CATEGORIES.needs;
-      const tag = e.subTag ? ` · ${e.subTag}` : "";
-      const diff =
-        e.currency !== state.baseCurrency
-          ? ` (${getCurrencySymbol(e.currency)}${e.amount})`
-          : "";
-      return `
+  container.innerHTML = expenses.map(e => {
+    const cat  = CATEGORIES[e.category] || CATEGORIES.needs;
+    const tag  = e.sub_tag ? ` · ${e.sub_tag}` : "";
+    const diff = e.currency !== state.baseCurrency
+      ? ` (${getCurrencySymbol(e.currency)}${e.amount})`
+      : "";
+    return `
       <div class="expense-item">
         <div class="expense-cat-dot" style="background:${cat.color}"></div>
         <div class="expense-info">
           <div class="expense-note">${e.note || "(no note)"}</div>
           <div class="expense-meta">${cat.icon} ${cat.label}${tag} · ${e.date}</div>
         </div>
-        <div class="expense-amount">${formatMoney(e.baseAmount)}${diff}</div>
+        <div class="expense-amount">${formatMoney(e.base_amount)}${diff}</div>
         <button class="expense-delete" onclick="deleteExpense('${e.id}', event)" title="Delete">×</button>
       </div>`;
-    })
-    .join("");
+  }).join("");
 }
 
 async function deleteExpense(id, event) {
   event.stopPropagation();
-  await dbDelete("expenses", id);
-  showToast("Entry deleted");
-  renderDashboard();
-  renderLedger();
+  try {
+    await dbDeleteExpense(id);
+    showToast("Entry deleted");
+    renderDashboard();
+    renderLedger();
+  } catch (err) {
+    showToast("Error: " + err.message);
+  }
 }
 
 // ══════════════════════════════════════════
 // REFLECT
 // ══════════════════════════════════════════
 function switchReflectTab(btn, tab) {
-  document
-    .querySelectorAll(".reflect-tab")
-    .forEach((t) => t.classList.remove("active"));
+  document.querySelectorAll(".reflect-tab").forEach(t => t.classList.remove("active"));
   btn.classList.add("active");
-  document
-    .getElementById("weeklyReflect")
-    .classList.toggle("hidden", tab !== "weekly");
-  document
-    .getElementById("monthlyReflect")
-    .classList.toggle("hidden", tab !== "monthly");
-  if (tab === "weekly") renderWeeklyReflect();
-  else renderMonthlyReflect();
+  document.getElementById("weeklyReflect").classList.toggle("hidden",  tab !== "weekly");
+  document.getElementById("monthlyReflect").classList.toggle("hidden", tab !== "monthly");
+  if (tab === "weekly")  renderWeeklyReflect();
+  else                   renderMonthlyReflect();
 }
 
 function getWeekRange(offset) {
-  const now = new Date();
-  const dayOfWeek = now.getDay();
-  const monday = new Date(now);
-  monday.setDate(now.getDate() - dayOfWeek + 1 + offset * 7);
+  const now       = new Date();
+  const monday    = new Date(now);
+  monday.setDate(now.getDate() - now.getDay() + 1 + offset * 7);
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
   return { start: monday, end: sunday };
@@ -863,200 +780,89 @@ function changeWeek(dir) {
 
 async function renderWeeklyReflect() {
   const { start, end } = getWeekRange(state.currentWeekOffset);
-  const label =
-    state.currentWeekOffset === 0
-      ? "This Week"
-      : state.currentWeekOffset === -1
-        ? "Last Week"
-        : `${start.toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${end.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+  const label = state.currentWeekOffset === 0  ? "This Week"
+    : state.currentWeekOffset === -1 ? "Last Week"
+    : `${start.toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${end.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
   document.getElementById("weekLabel").textContent = label;
 
   const startStr = start.toISOString().split("T")[0];
-  const endStr = end.toISOString().split("T")[0];
+  const endStr   = end.toISOString().split("T")[0];
 
-  const allExpenses = await dbGetAll("expenses");
-  const weekExpenses = allExpenses.filter(
-    (e) => e.date >= startStr && e.date <= endStr,
-  );
-  const weekTotal = weekExpenses.reduce(
-    (s, e) => s + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
+  const [allExpenses, saved] = await Promise.all([
+    dbGetAllExpenses(),
+    dbGetReflection("weekly", startStr),
+  ]);
+
+  const weekExpenses = allExpenses.filter(e => e.date >= startStr && e.date <= endStr);
+  const weekTotal    = weekExpenses.reduce((s, e) => s + (parseFloat(e.base_amount) || 0), 0);
 
   document.getElementById("weekSummary").innerHTML = weekExpenses.length
     ? `This week: <strong>${weekExpenses.length} entries</strong>, total <strong>${formatMoney(weekTotal)}</strong>`
     : "No expenses recorded this week.";
 
-  // Load saved reflection
-  const reflId = "weekly_" + startStr;
-  const saved = await dbGet("reflections", reflId);
   const answers = saved ? saved.answers : {};
-
-  document.getElementById("weeklyPrompts").innerHTML = WEEKLY_PROMPTS.map(
-    (q, i) => `
+  document.getElementById("weeklyPrompts").innerHTML = WEEKLY_PROMPTS.map((q, i) => `
     <div class="prompt-item">
       <div class="prompt-question">${q}</div>
       <textarea class="prompt-answer" id="wp_${i}" placeholder="Write your reflection...">${answers[i] || ""}</textarea>
-    </div>
-  `,
-  ).join("");
+    </div>`).join("");
 }
 
 async function renderMonthlyReflect() {
   const month = state.currentDashMonth;
-  const expenses = await dbGetByIndex("expenses", "month", month);
-  const total = expenses.reduce(
-    (s, e) => s + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
-  const income = getSetting("income_" + month) || state.monthlyIncome || 0;
-  const saved = income - total;
+  const [expenses, budget, saved] = await Promise.all([
+    dbGetExpensesByMonth(month),
+    dbGetBudget(month),
+    dbGetReflection("monthly", month),
+  ]);
+
+  const income = parseFloat(budget.income) || state.monthlyIncome || 0;
+  const total  = expenses.reduce((s, e) => s + (parseFloat(e.base_amount) || 0), 0);
+  const savedAmt = Math.max(0, income - total);
 
   document.getElementById("monthSummaryReflect").innerHTML = `
     <strong>${formatMonthDisplay(month)}</strong><br>
-    Income: ${formatMoney(income)} · Spent: ${formatMoney(total)} · Saved: ${formatMoney(Math.max(0, saved))}
-  `;
+    Income: ${formatMoney(income)} · Spent: ${formatMoney(total)} · Saved: ${formatMoney(savedAmt)}`;
 
-  const reflId = "monthly_" + month;
-  const savedRefl = await dbGet("reflections", reflId);
-  const answers = savedRefl ? savedRefl.answers : {};
-
-  document.getElementById("monthlyPrompts").innerHTML = MONTHLY_PROMPTS.map(
-    (q, i) => `
+  const answers = saved ? saved.answers : {};
+  document.getElementById("monthlyPrompts").innerHTML = MONTHLY_PROMPTS.map((q, i) => `
     <div class="prompt-item">
       <div class="prompt-question">${q}</div>
       <textarea class="prompt-answer" id="mp_${i}" placeholder="Write your reflection...">${answers[i] || ""}</textarea>
-    </div>
-  `,
-  ).join("");
+    </div>`).join("");
 }
 
-async function renderReflect() {
-  renderWeeklyReflect();
-}
+async function renderReflect() { renderWeeklyReflect(); }
 
 async function saveWeeklyReflection() {
   const { start } = getWeekRange(state.currentWeekOffset);
-  const startStr = start.toISOString().split("T")[0];
-  const reflId = "weekly_" + startStr;
-  const answers = {};
+  const period    = start.toISOString().split("T")[0];
+  const answers   = {};
   WEEKLY_PROMPTS.forEach((_, i) => {
     const el = document.getElementById("wp_" + i);
     if (el) answers[i] = el.value;
   });
-  await dbPut("reflections", {
-    id: reflId,
-    answers,
-    savedAt: new Date().toISOString(),
-  });
-  showToast("✓ Weekly reflection saved");
+  try {
+    await dbSaveReflection("weekly", period, answers);
+    showToast("Weekly reflection saved");
+  } catch (err) {
+    showToast("Error: " + err.message);
+  }
 }
 
 async function saveMonthlyReflection() {
-  const month = state.currentDashMonth;
-  const reflId = "monthly_" + month;
+  const month   = state.currentDashMonth;
   const answers = {};
   MONTHLY_PROMPTS.forEach((_, i) => {
     const el = document.getElementById("mp_" + i);
     if (el) answers[i] = el.value;
   });
-  await dbPut("reflections", {
-    id: reflId,
-    answers,
-    savedAt: new Date().toISOString(),
-  });
-  showToast("✓ Monthly reflection saved");
-}
-
-async function generateAIInsight() {
-  const btn = document.getElementById("aiInsightBtn");
-  const btnText = document.getElementById("aiInsightBtnText");
-  const resultDiv = document.getElementById("aiResult");
-  const resultText = document.getElementById("aiResultText");
-
-  btnText.innerHTML = '<span class="spinner"></span> Generating...';
-  btn.disabled = true;
-
   try {
-    const month = state.currentDashMonth;
-    const expenses = await dbGetByIndex("expenses", "month", month);
-    const income = getSetting("income_" + month) || state.monthlyIncome || 0;
-    const total = expenses.reduce(
-      (s, e) => s + (parseFloat(e.baseAmount) || 0),
-      0,
-    );
-    const saved = Math.max(0, income - total);
-
-    // Get reflection answers
-    const reflId = "monthly_" + month;
-    const savedRefl = await dbGet("reflections", reflId);
-    const answers = savedRefl ? savedRefl.answers : {};
-    const reflectionText = MONTHLY_PROMPTS.map((q, i) =>
-      answers[i] ? `Q: ${q}\nA: ${answers[i]}` : "",
-    )
-      .filter(Boolean)
-      .join("\n\n");
-
-    // Category breakdown
-    const catBreakdown = Object.entries(CATEGORIES)
-      .map(([key, cat]) => {
-        const catTotal = expenses
-          .filter((e) => e.category === key)
-          .reduce((s, e) => s + (parseFloat(e.baseAmount) || 0), 0);
-        return `${cat.label}: ${formatMoney(catTotal)}`;
-      })
-      .join(", ");
-
-    const prompt = `You are a mindful financial advisor using the Kakeibo method. Analyze this user's month and provide a warm, insightful, encouraging reflection in 3-4 short paragraphs.
-
-Month: ${formatMonthDisplay(month)}
-Income: ${formatMoney(income)}
-Total Spent: ${formatMoney(total)}
-Saved: ${formatMoney(saved)}
-Category Breakdown: ${catBreakdown}
-Number of entries: ${expenses.length}
-
-${reflectionText ? `User's own reflections:\n${reflectionText}` : ""}
-
-Provide a mindful, Japanese-philosophy-inspired insight that:
-1. Acknowledges their spending patterns with compassion
-2. Highlights one positive habit or win
-3. Gently suggests one area of mindful improvement
-4. Ends with an encouraging Kakeibo-style wisdom note
-
-Keep it personal, warm, and under 200 words. Do not use bullet points.`;
-
-    const res = await fetch(GEMINI_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: 400, temperature: 0.75 },
-      }),
-    });
-
-    const data = await res.json();
-
-    // Server returned an error (e.g. 429)
-    if (data.error) {
-      showToast(data.error);
-      btnText.textContent = "Generate Insight";
-      btn.disabled = false;
-      return;
-    }
-
-    const text =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Unable to generate insight at this time.";
-    resultText.textContent = text;
-    resultDiv.classList.remove("hidden");
-    showToast("AI insight ready");
+    await dbSaveReflection("monthly", month, answers);
+    showToast("Monthly reflection saved");
   } catch (err) {
-    showToast("Could not reach server. Is it running on port 3000?");
+    showToast("Error: " + err.message);
   }
-
-  btnText.textContent = "Generate Insight";
-  btn.disabled = false;
 }
 
 // ══════════════════════════════════════════
@@ -1079,12 +885,10 @@ function renderEmojiGrid() {
     { key: "globe",   svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>` },
     { key: "fitness", svg: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 6.5h1M16.5 6.5h1M6.5 17.5h1M16.5 17.5h1"/><rect x="7.5" y="5" width="9" height="14" rx="2"/><line x1="2" y1="8.5" x2="7.5" y2="8.5"/><line x1="2" y1="15.5" x2="7.5" y2="15.5"/><line x1="16.5" y1="8.5" x2="22" y2="8.5"/><line x1="16.5" y1="15.5" x2="22" y2="15.5"/></svg>` },
   ];
-  grid.innerHTML = icons
-    .map(
-      ({ key, svg }) =>
-        `<button type="button" class="emoji-btn ${svg === state.selectedGoalEmoji ? "active" : ""}" onclick="selectIcon(\`${svg.replace(/`/g, "\`")}\`)">${svg}</button>`,
-    )
-    .join("");
+  grid.innerHTML = icons.map(({ key, svg }) =>
+    `<button type="button" class="emoji-btn ${svg === state.selectedGoalEmoji ? "active" : ""}"
+      onclick="selectIcon(\`${svg.replace(/`/g, "\\`")}\`)">${svg}</button>`
+  ).join("");
 }
 
 function selectIcon(svg) {
@@ -1094,79 +898,69 @@ function selectIcon(svg) {
 }
 
 function openGoalModal() {
+  const defaultSvg = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
   document.getElementById("goalCurrencyLabel").textContent = state.baseCurrency;
-  document.getElementById("goalName").value = "";
-  document.getElementById("goalTarget").value = "";
+  document.getElementById("goalName").value     = "";
+  document.getElementById("goalTarget").value   = "";
   document.getElementById("goalDeadline").value = "";
-  document.getElementById("goalEmoji").value = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
-  state.selectedGoalEmoji = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
+  document.getElementById("goalEmoji").value    = defaultSvg;
+  state.selectedGoalEmoji = defaultSvg;
   renderEmojiGrid();
   showModal("goalModal");
 }
 
 async function saveGoal() {
-  const name = document.getElementById("goalName").value.trim();
-  const target = parseFloat(document.getElementById("goalTarget").value);
+  const name     = document.getElementById("goalName").value.trim();
+  const target   = parseFloat(document.getElementById("goalTarget").value);
   const deadline = document.getElementById("goalDeadline").value;
-  const emoji =
-    document.getElementById("goalEmoji").value ||
-    state.selectedGoalEmoji ||
-    `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
+  const emoji    = document.getElementById("goalEmoji").value || state.selectedGoalEmoji;
 
-  if (!name) {
-    showToast("Please enter a goal name");
-    return;
-  }
-  if (!target || target <= 0) {
-    showToast("Please enter a target amount");
-    return;
-  }
+  if (!name)             { showToast("Please enter a goal name");   return; }
+  if (!target || target <= 0) { showToast("Please enter a target amount"); return; }
 
   const goal = {
-    id: Date.now().toString(),
-    name,
-    target,
-    deadline,
-    emoji,
-    current: 0,
+    id:       Date.now().toString(),
+    name, target, deadline, emoji,
+    current:  0,
     currency: state.baseCurrency,
-    createdAt: new Date().toISOString(),
   };
 
-  await dbPut("goals", goal);
-  closeAllModals();
-  renderGoals();
-  showToast("Goal created!");
+  try {
+    await dbSaveGoal(goal);
+    closeAllModals();
+    renderGoals();
+    showToast("Goal created!");
+  } catch (err) {
+    showToast("Error: " + err.message);
+  }
 }
 
 async function renderGoals() {
-  const goals = await dbGetAll("goals");
-  const list = document.getElementById("goalsList");
+  const goals = await dbGetGoals();
+  const list  = document.getElementById("goalsList");
   if (!goals.length) {
     list.innerHTML = `
       <div class="empty-state">
-        <div class="empty-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div class="empty-icon"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
         <div>No goals yet</div>
         <div class="empty-sub">Set your first savings goal above</div>
       </div>`;
     return;
   }
-
-  list.innerHTML = goals
-    .map((g) => {
-      const pct = Math.min(100, (g.current / g.target) * 100);
-      const completed = pct >= 100;
-      const deadlineStr = g.deadline
-        ? ` · Due ${new Date(g.deadline).toLocaleDateString("en-US", { month: "short", year: "numeric" })}`
-        : "";
-      return `
+  list.innerHTML = goals.map(g => {
+    const pct       = Math.min(100, (g.current / g.target) * 100);
+    const completed = pct >= 100;
+    const deadlineStr = g.deadline
+      ? ` · Due ${new Date(g.deadline).toLocaleDateString("en-US", { month: "short", year: "numeric" })}`
+      : "";
+    return `
       <div class="goal-card ${completed ? "completed" : ""}">
         <div class="goal-card-header">
           <div class="goal-title-wrap">
-            <span class="goal-emoji">${g.emoji}</span>
+            <span class="goal-emoji">${g.emoji || ""}</span>
             <div>
               <div class="goal-name">${g.name}</div>
-              <div class="goal-deadline">${state.baseCurrency}${deadlineStr}</div>
+              <div class="goal-deadline">${g.currency || state.baseCurrency}${deadlineStr}</div>
             </div>
           </div>
           <button class="goal-delete" onclick="deleteGoal('${g.id}')">×</button>
@@ -1180,80 +974,67 @@ async function renderGoals() {
             <span class="goal-progress-pct">${Math.round(pct)}%</span>
           </div>
         </div>
-        ${
-          !completed
-            ? `
-        <div class="goal-card-footer">
-          <button class="goal-log-btn" onclick="openGoalLog('${g.id}')">+ Add Progress</button>
-        </div>`
-            : `<div style="text-align:center;font-size:13px;color:var(--positive);margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;"><svg viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'/></svg> Goal achieved!</div>`
+        ${!completed
+          ? `<div class="goal-card-footer"><button class="goal-log-btn" onclick="openGoalLog('${g.id}')">+ Add Progress</button></div>`
+          : `<div style="text-align:center;font-size:13px;color:var(--positive);margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;"><svg viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'/></svg> Goal achieved!</div>`
         }
       </div>`;
-    })
-    .join("");
+  }).join("");
 }
 
 function openGoalLog(goalId) {
   document.getElementById("goalLogAmount").value = "";
-  document.getElementById("goalLogId").value = goalId;
+  document.getElementById("goalLogId").value     = goalId;
   showModal("goalLogModal");
 }
 
 async function logGoalProgress() {
-  const id = document.getElementById("goalLogId").value;
+  const id     = document.getElementById("goalLogId").value;
   const amount = parseFloat(document.getElementById("goalLogAmount").value);
-  if (!amount || amount <= 0) {
-    showToast("Enter a valid amount");
-    return;
-  }
+  if (!amount || amount <= 0) { showToast("Enter a valid amount"); return; }
 
-  const goal = await dbGet("goals", id);
+  const goals = await dbGetGoals();
+  const goal  = goals.find(g => g.id === id);
   if (!goal) return;
-  goal.current = (goal.current || 0) + amount;
-  await dbPut("goals", goal);
 
-  closeAllModals();
-  renderGoals();
-
-  if (goal.current >= goal.target) {
-    celebrate(goal.emoji, `${goal.name} Complete!`);
-  } else {
-    showToast(`✓ Progress logged: ${formatMoney(amount)}`);
+  goal.current = (parseFloat(goal.current) || 0) + amount;
+  try {
+    await dbSaveGoal(goal);
+    closeAllModals();
+    renderGoals();
+    if (goal.current >= goal.target) {
+      celebrate(goal.emoji, `${goal.name} Complete!`);
+    } else {
+      showToast(`Progress logged: ${formatMoney(amount)}`);
+    }
+  } catch (err) {
+    showToast("Error: " + err.message);
   }
 }
 
 async function deleteGoal(id) {
-  await dbDelete("goals", id);
-  renderGoals();
-  showToast("Goal removed");
+  try {
+    await dbDeleteGoal(id);
+    renderGoals();
+    showToast("Goal removed");
+  } catch (err) {
+    showToast("Error: " + err.message);
+  }
 }
 
+// ══════════════════════════════════════════
 // CSV IMPORT / EXPORT
-
+// ══════════════════════════════════════════
 async function exportCSV() {
-  const all = await dbGetAll("expenses");
-  if (!all.length) {
-    showToast("No data to export");
-    return;
-  }
-  const header =
-    "date,amount,currency,baseAmount,baseCurrency,category,subTag,note,recurring";
-  const rows = all.map((e) =>
-    [
-      e.date,
-      e.amount,
-      e.currency,
-      e.baseAmount,
-      state.baseCurrency,
-      e.category,
-      e.subTag || "",
-      (e.note || "").replace(/,/g, ""),
-      e.recurring || false,
-    ].join(","),
-  );
-  const csv = [header, ...rows].join("\n");
-  downloadFile(csv, "kakeibo_export.csv", "text/csv");
-  showToast("✓ CSV exported");
+  const all = await dbGetAllExpenses();
+  if (!all.length) { showToast("No data to export"); return; }
+  const header = "date,amount,currency,baseAmount,baseCurrency,category,subTag,note,recurring";
+  const rows   = all.map(e => [
+    e.date, e.amount, e.currency, e.base_amount, state.baseCurrency,
+    e.category, e.sub_tag || "", (e.note || "").replace(/,/g, ""), e.recurring || false,
+  ].join(","));
+  downloadFile([header, ...rows].join("\n"), "kakeibo_export.csv", "text/csv");
+  showToast("CSV exported");
 }
 
 function importCSV(event) {
@@ -1261,30 +1042,34 @@ function importCSV(event) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = async (e) => {
-    const lines = e.target.result.split("\n").filter((l) => l.trim());
+    const lines = e.target.result.split("\n").filter(l => l.trim());
     let count = 0;
     for (let i = 1; i < lines.length; i++) {
       const cols = lines[i].split(",");
       if (cols.length < 4) continue;
-      const [date, amount, currency, baseAmount, , category, subTag, note] =
-        cols;
+      const [date, amount, currency, baseAmount, , category, subTag, note] = cols;
       const month = (date || "").substring(0, 7);
       if (!month) continue;
-      await dbPut("expenses", {
-        id: Date.now().toString() + i,
-        date: date.trim(),
-        amount: parseFloat(amount),
-        currency: currency.trim(),
-        baseAmount: parseFloat(baseAmount),
-        category: (category || "needs").trim(),
-        subTag: (subTag || "").trim(),
-        note: (note || "").trim(),
-        month,
-        createdAt: new Date().toISOString(),
-      });
-      count++;
+      try {
+        await dbSaveExpense({
+          id:           Date.now().toString() + i,
+          date:         date.trim(),
+          amount:       parseFloat(amount),
+          currency:     currency.trim(),
+          baseAmount:   parseFloat(baseAmount),
+          category:     (category || "needs").trim(),
+          subTag:       (subTag  || "").trim(),
+          note:         (note    || "").trim(),
+          month,
+          recurring:    false,
+          recurringFreq: null,
+        });
+        count++;
+      } catch (err) {
+        console.error("Import row error:", err.message);
+      }
     }
-    showToast(`✓ Imported ${count} entries`);
+    showToast(`Imported ${count} entries`);
     renderDashboard();
     event.target.value = "";
   };
@@ -1293,100 +1078,101 @@ function importCSV(event) {
 
 function downloadFile(content, filename, type) {
   const blob = new Blob([content], { type });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
 // ══════════════════════════════════════════
-// CUSTOM TAGS
+// CUSTOM TAGS (device-local — preferences only)
 // ══════════════════════════════════════════
-function openCustomTag() {
-  showModal("customTagModal");
-}
+function openCustomTag() { showModal("customTagModal"); }
 
 function saveCustomTag() {
   const val = document.getElementById("customTagInput").value.trim();
-  if (!val) {
-    showToast("Enter a tag name");
-    return;
-  }
-  const key = "custom_tags_" + selectedCategory;
-  const existing = getSetting(key) || [];
+  if (!val) { showToast("Enter a tag name"); return; }
+  const key      = "kakeibo_custom_tags_" + selectedCategory;
+  const existing = JSON.parse(localStorage.getItem(key) || "[]");
   if (!existing.includes(val)) {
-    setSetting(key, [...existing, val]);
+    localStorage.setItem(key, JSON.stringify([...existing, val]));
   }
   renderAllSubtags();
   closeAllModals();
-  showToast(`✓ Tag "${val}" added`);
+  showToast(`Tag "${val}" added`);
 }
 
 // ══════════════════════════════════════════
 // SETTINGS
 // ══════════════════════════════════════════
-function openSettings() {
+async function openSettings() {
   const sc = document.getElementById("settingsCurrency");
   if (sc) sc.value = state.baseCurrency;
+  const month  = state.currentDashMonth;
+  const budget = await dbGetBudget(month);
   const si = document.getElementById("settingsIncome");
   const ss = document.getElementById("settingsSavings");
-  const month = state.currentDashMonth;
-  if (si) si.value = getSetting("income_" + month) || "";
-  if (ss) ss.value = getSetting("savings_" + month) || "";
+  if (si) si.value = budget.income      || "";
+  if (ss) ss.value = budget.savings_goal || "";
   showModal("settingsModal");
 }
 
-function updateBaseCurrency(code) {
+async function updateBaseCurrency(code) {
   state.baseCurrency = code;
-  setSetting("baseCurrency", code);
-  fetchExchangeRates(code).then(() => renderDashboard());
-}
-
-function updateMonthlyIncome(val) {
-  const v = parseFloat(val) || 0;
-  state.monthlyIncome = v;
-  setSetting("income_" + state.currentDashMonth, v);
+  await dbSaveSettings({ base_currency: code });
+  await fetchExchangeRates(code);
   renderDashboard();
 }
 
-function updateSavingsGoal(val) {
+async function updateMonthlyIncome(val) {
+  const v = parseFloat(val) || 0;
+  state.monthlyIncome = v;
+  const month  = state.currentDashMonth;
+  const budget = await dbGetBudget(month);
+  await dbSaveBudget(month, v, parseFloat(budget.savings_goal) || 0);
+  renderDashboard();
+}
+
+async function updateSavingsGoal(val) {
   const v = parseFloat(val) || 0;
   state.savingsGoal = v;
-  setSetting("savings_" + state.currentDashMonth, v);
+  const month  = state.currentDashMonth;
+  const budget = await dbGetBudget(month);
+  await dbSaveBudget(month, parseFloat(budget.income) || 0, v);
   renderDashboard();
 }
 
 async function clearAllData() {
-  if (!confirm("This will delete ALL your data. Are you sure?")) return;
+  if (!confirm("This will delete ALL your data permanently. Are you sure?")) return;
+  await Promise.all([
+    supabaseClient.from("expenses").delete().eq("user_id", state.user.id),
+    supabaseClient.from("goals").delete().eq("user_id", state.user.id),
+    supabaseClient.from("reflections").delete().eq("user_id", state.user.id),
+    supabaseClient.from("monthly_budgets").delete().eq("user_id", state.user.id),
+    supabaseClient.from("user_settings").delete().eq("user_id", state.user.id),
+  ]);
   localStorage.clear();
-  const stores = ["expenses", "reflections", "goals", "settings"];
-  for (const store of stores) {
-    const tx = db.transaction(store, "readwrite");
-    tx.objectStore(store).clear();
-  }
-  setTimeout(() => location.reload(), 500);
+  setTimeout(() => location.reload(), 400);
 }
 
 // ══════════════════════════════════════════
 // THEME
 // ══════════════════════════════════════════
 function toggleTheme() {
-  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const isDark   = document.documentElement.getAttribute("data-theme") === "dark";
   const newTheme = isDark ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", newTheme);
-  setSetting("theme", newTheme);
-  const icons = {
-    light: `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" fill="#C0C0C0"/></svg>`,
-    dark: `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="#FF8C00"/></svg>`,
-  };
-
-  document.getElementById("themeBtn").innerHTML =
-    newTheme === "dark" ? icons.dark : icons.light;
-  setTimeout(() => renderDashboard(), 50); // redraw canvas with new colors
+  localStorage.setItem("kakeibo-theme", newTheme);
+  dbSaveSettings({ theme: newTheme });
+  const moonSvg = `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" fill="#C0C0C0"/></svg>`;
+  const sunSvg  = `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="#FF8C00"/></svg>`;
+  const icon = newTheme === "dark" ? sunSvg : moonSvg;
+  const tb1 = document.getElementById("themeBtn");
+  const tb2 = document.getElementById("themeBtnMobile");
+  if (tb1) tb1.innerHTML = icon;
+  if (tb2) tb2.innerHTML = icon;
+  setTimeout(() => renderDashboard(), 50);
 }
 
 // ══════════════════════════════════════════
@@ -1394,25 +1180,22 @@ function toggleTheme() {
 // ══════════════════════════════════════════
 function showModal(id) {
   document.getElementById("modalOverlay").classList.remove("hidden");
-  document
-    .querySelectorAll(".modal")
-    .forEach((m) => m.classList.remove("active"));
+  document.querySelectorAll(".modal").forEach(m => m.classList.remove("active"));
   document.getElementById(id)?.classList.add("active");
 }
 
 function closeAllModals() {
   document.getElementById("modalOverlay").classList.add("hidden");
-  document
-    .querySelectorAll(".modal")
-    .forEach((m) => m.classList.remove("active"));
+  document.querySelectorAll(".modal").forEach(m => m.classList.remove("active"));
 }
 
 function closeModal(e) {
   if (e.target === document.getElementById("modalOverlay")) closeAllModals();
 }
 
+// ══════════════════════════════════════════
 // TOAST
-
+// ══════════════════════════════════════════
 let toastTimer;
 function showToast(msg) {
   const toast = document.getElementById("toast");
@@ -1422,11 +1205,13 @@ function showToast(msg) {
   toastTimer = setTimeout(() => toast.classList.add("hidden"), 2800);
 }
 
+// ══════════════════════════════════════════
+// CELEBRATION
+// ══════════════════════════════════════════
 function celebrate(emoji, text) {
   const overlay = document.getElementById("celebrationOverlay");
   document.getElementById("celebrationEmoji").innerHTML = emoji || `<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
-  document.getElementById("celebrationText").textContent =
-    text || "Goal Achieved!";
+  document.getElementById("celebrationText").textContent = text || "Goal Achieved!";
   overlay.classList.remove("hidden");
   setTimeout(() => overlay.classList.add("hidden"), 3500);
 }
@@ -1435,96 +1220,72 @@ document.getElementById("celebrationOverlay")?.addEventListener("click", () => {
   document.getElementById("celebrationOverlay").classList.add("hidden");
 });
 
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
 async function init() {
-  // 1. Initialize local Database (IndexedDB)
-  await initDB();
-
-  // 2. Restore Theme from local settings
-  const savedTheme = getSetting("theme") || "light";
+  // Restore theme immediately from localStorage (fast, no network)
+  const savedTheme = localStorage.getItem("kakeibo-theme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
-  const themeBtn = document.getElementById("themeBtn");
-  const icons = {
-    light: `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" fill="#C0C0C0"/></svg>`,
-    dark: `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="#FF8C00"/></svg>`,
-  };
-  if (themeBtn) themeBtn.innerHTML = savedTheme === "dark" ? icons.dark : icons.light;
+  const moonSvg = `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" fill="#C0C0C0"/></svg>`;
+  const sunSvg  = `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="#FF8C00"/></svg>`;
+  const icon = savedTheme === "dark" ? sunSvg : moonSvg;
+  const tb1 = document.getElementById("themeBtn");
+  const tb2 = document.getElementById("themeBtnMobile");
+  if (tb1) tb1.innerHTML = icon;
+  if (tb2) tb2.innerHTML = icon;
 
-  // 3. Set current time context
-  state.currentDashMonth = getCurrentMonth();
+  state.currentDashMonth   = getCurrentMonth();
   state.currentLedgerMonth = getCurrentMonth();
 
-  // 4. Listen for Supabase Auth Changes (The "Source of Truth")
+  // Auth state drives everything
   supabaseClient.auth.onAuthStateChange(async (event, session) => {
     const onboarding = document.getElementById("onboarding");
 
     if (session) {
-      // USER LOGGED IN
       state.user = session.user;
-      console.log("Session active for:", session.user.email);
 
-      // Fetch profile from Supabase
-      const { data } = await supabaseClient
-        .from("profiles")
-        .select("username, full_name")
-        .eq("id", session.user.id)
-        .single();
+      // Load settings from Supabase
+      const settings = await dbLoadSettings();
 
-      if (data) state.profile = data;
+      if (settings) {
+        state.baseCurrency  = settings.base_currency || "USD";
+        // Sync theme from Supabase if available
+        if (settings.theme) {
+          document.documentElement.setAttribute("data-theme", settings.theme);
+          localStorage.setItem("kakeibo-theme", settings.theme);
+        }
 
-      // Setup App State
-      const baseCurrency = getSetting("baseCurrency") || "USD";
-      state.baseCurrency = baseCurrency;
-      state.monthlyIncome = getSetting("income_" + state.currentDashMonth) || 0;
-      state.savingsGoal = getSetting("savings_" + state.currentDashMonth) || 0;
+        // Load this month's budget into state
+        const budget = await dbGetBudget(state.currentDashMonth);
+        state.monthlyIncome = parseFloat(budget.income)       || 0;
+        state.savingsGoal   = parseFloat(budget.savings_goal) || 0;
 
-      await fetchExchangeRates(baseCurrency);
+        await fetchExchangeRates(state.baseCurrency);
 
-      const onboarded = getSetting("onboarded");
-      if (!onboarded) {
-        // First time user — show onboarding
+        if (settings.onboarded) {
+          if (onboarding) onboarding.classList.add("hidden");
+          launchApp();
+        } else {
+          if (onboarding) onboarding.classList.remove("hidden");
+          renderCurrencyList();
+        }
+      } else {
+        // First ever login — no settings row yet
         if (onboarding) onboarding.classList.remove("hidden");
         renderCurrencyList();
-      } else {
-        // Returning user — go straight to app
-        if (onboarding) onboarding.classList.add("hidden");
-        launchApp();
       }
 
     } else {
-      // USER LOGGED OUT
-      state.user = null;
+      // Logged out
+      state.user    = null;
       state.profile = null;
-      
-      // Check if they've at least finished local onboarding before showing overlay
-      const onboarded = getSetting("onboarded");
-      if (!onboarded) {
-        if (onboarding) onboarding.classList.remove("hidden");
-        renderCurrencyList();
-      }
+      const app = document.getElementById("app");
+      if (app) app.classList.add("hidden");
+      // Auth pages handle redirect — don't force here
     }
   });
-};
-
-init();
-
-// Keyboard support
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeAllModals();
-});
-
-
-// Add this helper for "Exponential Backoff"
-const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
-
-async function fetchWithRetry(url, options, retries = 3) {
-  for (let i = 0; i < retries; i++) {
-    const res = await fetch(url, options);
-    if (res.status === 429) {
-      const waitTime = Math.pow(2, i) * 1000; // Wait 1s, then 2s, then 4s
-      console.log(`Rate limited. Retrying in ${waitTime}ms...`);
-      await sleep(waitTime);
-      continue;
-    }
-    return res;
-  }
 }
+
+document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeAllModals(); });
