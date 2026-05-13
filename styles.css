@@ -971,7 +971,7 @@ input, select, textarea {
 
 .note-input:focus, .date-input:focus {
   outline: none;
-  border-color: var(--greeb-mid);
+  border-color: var(--green-mid);
 }
 
 .recurring-section {
