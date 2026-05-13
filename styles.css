@@ -248,7 +248,6 @@ input, select, textarea {
 }
 
 .currency-search-wrap::before {
-  content: '🔍';
   position: absolute;
   left: 14px;
   top: 50%;
