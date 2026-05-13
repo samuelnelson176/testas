@@ -54,7 +54,7 @@ async function signUpNewUser(email, password, username, fullName) {
       console.error("Error saving profile info:", profileError.message);
     } else {
       alert("Account created and profile saved!");
-      window.location.href = "main.html";
+      window.location.href = "signin.html";
     }
   }
 }
