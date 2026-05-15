@@ -198,8 +198,8 @@ async function dbGetBudget(month) {
     .select("income, savings_goal")
     .eq("user_id", state.user.id)
     .eq("month", month)
-    .single();
-  if (error && error.code !== "PGRST116") console.error("dbGetBudget:", error.message);
+    .maybeSingle();
+  if (error) console.error("dbGetBudget:", error.message);
   const result = { income: data?.income || 0, savings_goal: data?.savings_goal || 0 };
   state._budgetCache[month] = result;
   return result;
@@ -223,8 +223,8 @@ async function dbLoadSettings() {
     .from("user_settings")
     .select("*")
     .eq("user_id", state.user.id)
-    .single();
-  if (error && error.code !== "PGRST116") console.error("dbLoadSettings:", error.message);
+    .maybeSingle();
+  if (error) console.error("dbLoadSettings:", error.message);
   return data || null;
 }
 
@@ -279,8 +279,8 @@ async function dbGetReflection(type, period) {
     .select("answers")
     .eq("id", id)
     .eq("user_id", state.user.id)
-    .single();
-  if (error && error.code !== "PGRST116") console.error("dbGetReflection:", error.message);
+    .maybeSingle();
+  if (error) console.error("dbGetReflection:", error.message);
   return data ? { answers: data.answers } : null;
 }
 
