@@ -53,8 +53,9 @@ async function signUpNewUser(email, password, username, fullName) {
     if (profileError) {
       console.error("Error saving profile info:", profileError.message);
     } else {
-      alert("Account created and profile saved!");
-      window.location.href = "signin.html";
+      setTimeout(() => {
+      window.location.href = "main.html";
+    }, 1000);
     }
   }
 }
@@ -68,7 +69,6 @@ async function signInUser(email, password) {
   if (error) {
     alert("Login failed: " + error.message);
   } else {
-    alert("Welcome back!");
     setTimeout(() => {
       window.location.href = "main.html";
     }, 1000);
