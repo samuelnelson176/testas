@@ -334,49 +334,30 @@
               <div class="form-section">
                 <label class="form-label">Category</label>
                 <div class="category-picker" id="categoryPicker">
-                  <button
-                    class="cat-btn active"
-                    data-cat="needs"
-                    onclick="selectCategory(this, 'needs')"
-                  >
-                    <span class="cat-icon"
-                      ><svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path
-                          d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"
-                        />
-                        <path d="M9 21V12h6v9" /></svg></span
-                    ><span>Needs</span>
-                  </button>
-                  <button
-                    class="cat-btn"
-                    data-cat="wants"
-                    onclick="selectCategory(this, 'wants')"
-                  >
-                    <span class="cat-icon">✨</span><span>Wants</span>
-                  </button>
-                  <button
-                    class="cat-btn"
-                    data-cat="culture"
-                    onclick="selectCategory(this, 'culture')"
-                  >
-                    <span class="cat-icon">🎭</span><span>Culture</span>
-                  </button>
-                  <button
-                    class="cat-btn"
-                    data-cat="savings"
-                    onclick="selectCategory(this, 'savings')"
-                  >
-                    <span class="cat-icon">🌱</span><span>Savings</span>
-                  </button>
+                  
+      <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('home')" id="nav-home">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          <span class="nav-label">Home</span>
+        </button>
+         <button class="nav-item active" onclick="switchTab('track')" id="nav-track">
+          <span class="nav-icon">✎</span>
+          <span class="nav-label">Track</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('ledger')" id="nav-ledger">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          <span class="nav-label">Ledger</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('reflect')" id="nav-reflect">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <span class="nav-label">Reflect</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('goals')" id="nav-goals">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span class="nav-label">Goals</span>
+        </button>
+      </nav>
+    </div>
                 </div>
               </div>
 
@@ -661,32 +642,24 @@
 
       <!-- BOTTOM NAV -->
       <nav class="bottom-nav">
-        <button
-          class="nav-item active"
-          onclick="switchTab('home')"
-          id="nav-home"
-        >
-          <span class="nav-icon">⊞</span>
+        <button class="nav-item active" onclick="switchTab('home')" id="nav-home">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
           <span class="nav-label">Home</span>
         </button>
-        <button class="nav-item" onclick="switchTab('track')" id="nav-track">
+         <button class="nav-item active" onclick="switchTab('track')" id="nav-track">
           <span class="nav-icon">✎</span>
           <span class="nav-label">Track</span>
         </button>
         <button class="nav-item" onclick="switchTab('ledger')" id="nav-ledger">
-          <span class="nav-icon">≡</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
           <span class="nav-label">Ledger</span>
         </button>
-        <button
-          class="nav-item"
-          onclick="switchTab('reflect')"
-          id="nav-reflect"
-        >
-          <span class="nav-icon">◯</span>
+        <button class="nav-item" onclick="switchTab('reflect')" id="nav-reflect">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           <span class="nav-label">Reflect</span>
         </button>
         <button class="nav-item" onclick="switchTab('goals')" id="nav-goals">
-          <span class="nav-icon">◈</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
           <span class="nav-label">Goals</span>
         </button>
       </nav>
@@ -698,6 +671,7 @@
       class="modal-overlay hidden"
       onclick="closeModal(event)"
     >
+      
       <!-- Goal Modal -->
       <div class="modal" id="goalModal">
         <div class="modal-header">
@@ -730,190 +704,13 @@
             <input type="date" id="goalDeadline" />
           </div>
           <div class="form-group">
-            <label>Emoji Icon</label>
-            <div class="emoji-grid" id="goalEmojiGrid">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="12" r="3" />
-                <path
-                  d="M12 2a3 3 0 0 1 3 3 3 3 0 0 1 3-3 3 3 0 0 1 0 6 3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 0-6 3 3 0 0 1 3 3 3 3 0 0 1 3-3z"
-                />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"
-                />
-                <path d="M9 21V12h6v9" />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M17.8 19.2L16 11l3.5-3.5A2 2 0 0 0 17 4.5L13.5 8 5 6l-1.5 1.5 6 3.5L7 13l-2-.5L3.5 14l3 1.5 1.5 3 1.5-1.5L9 15l2.5-2 3.5 6z"
-                />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                <path d="M6 12v5c3 3 9 3 12 0v-5" />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M5 17H3v-5l2-5h14l2 5v5h-2" />
-                <circle cx="7.5" cy="17.5" r="2.5" />
-                <circle cx="16.5" cy="17.5" r="2.5" />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="2" y="3" width="20" height="14" rx="2" />
-                <path d="M2 20h20" />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="7" r="4" />
-                <path d="M8 11v4a4 4 0 0 0 8 0v-4" />
-                <path d="M9 21h6" />
-                <path d="M12 19v2" />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M18 8a6 6 0 0 0-12 0" />
-                <path d="M6 8l6 13 6-13" />
-                <line x1="2" y1="21" x2="22" y2="21" />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="20 12 20 22 4 22 4 12" />
-                <rect x="2" y="7" width="20" height="5" />
-                <path
-                  d="M12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"
-                />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="15" r="7" />
-                <path d="M8.5 8.5L9 6l3-3 3 3 .5 2.5" />
-                <path d="M8.5 8.5h7" />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <path
-                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                />
-              </svg>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M6 4v16M18 4v16" />
-                <path d="M3 8h3M18 8h3M3 16h3M18 16h3" />
-                <line x1="6" y1="12" x2="18" y2="12" />
-              </svg>
-            </div>
-            <input type="text" id="goalEmoji" placeholder="🌸" maxlength="2" />
+            <input type="hidden" id="goalEmoji" />
           </div>
           <button class="btn-primary btn-full" onclick="saveGoal()">
             Create Goal
           </button>
         </div>
       </div>
-
       <!-- Settings Modal -->
       <div class="modal" id="settingsModal">
         <div class="modal-header">
