@@ -8,7 +8,7 @@
     />
     <meta
       name="description"
-      content="Kakeibo - Mindful Money Tracker. Track less. Reflect more. Save with intention."
+      content="Kakeibo - Mindful Money Tracker. Track less. Reflect more. Save with intention. Budgeting App"
     />
     <meta name="theme-color" content="#2D5016" />
     <title>Kakeibo - Mindful Money Tracker</title>
@@ -55,6 +55,7 @@
             Begin My Journey
           </button>
         </div>
+
         <div class="onboarding-step" id="step-2">
           <h2 class="step-title">Choose Your Base Currency</h2>
           <p class="step-desc">
@@ -79,6 +80,7 @@
             Continue
           </button>
         </div>
+
         <div class="onboarding-step" id="step-3">
           <h2 class="step-title">Set Up This Month</h2>
           <p class="step-desc">
@@ -139,6 +141,7 @@
             Start Tracking
           </button>
         </div>
+
         <div class="step-dots">
           <div class="dot active" id="dot-1"></div>
           <div class="dot" id="dot-2"></div>
@@ -146,6 +149,7 @@
         </div>
       </div>
     </div>
+
     <!-- MAIN APP -->
     <div id="app" class="app hidden">
       <!-- TOP BAR -->
@@ -201,6 +205,7 @@
           </button>
         </div>
       </header>
+
       <!-- SCREEN CONTAINER -->
       <main class="screen-container">
         <!-- ═══════════════════════════════ DASHBOARD ═══════════════════════════════ -->
@@ -216,6 +221,7 @@
                 "What is your income this month?"
               </div>
             </div>
+
             <div class="budget-overview-card">
               <div class="balance-headline">
                 <div class="balance-label">Available This Month</div>
@@ -246,9 +252,11 @@
                 </div>
               </div>
             </div>
+
             <div class="categories-grid" id="categoriesGrid">
               <!-- dynamically filled -->
             </div>
+
             <div class="daily-prompt-card" id="dailyPromptCard">
               <div class="prompt-label">Today's Reflection</div>
               <div class="prompt-text" id="dailyPrompt">
@@ -258,6 +266,7 @@
                 Reflect Now →
               </button>
             </div>
+
             <div class="recent-expenses">
               <div class="section-header">
                 <span>Recent Entries</span>
@@ -294,6 +303,7 @@
             </div>
           </div>
         </section>
+
         <!-- ═══════════════════════════════ TRACK ═══════════════════════════════ -->
         <section class="screen" id="screen-track">
           <div class="screen-scroll">
@@ -301,6 +311,7 @@
               <h2>Log Expense</h2>
               <p>Every entry is an act of mindfulness</p>
             </div>
+
             <div class="track-form">
               <div class="amount-hero">
                 <div class="amount-currency-select">
@@ -319,6 +330,7 @@
                 />
                 <div class="conversion-preview" id="conversionPreview"></div>
               </div>
+
               <div class="form-section">
                 <label class="form-label">Category</label>
                 <div class="category-picker" id="categoryPicker">
@@ -379,6 +391,7 @@
                   </button>
                 </div>
               </div>
+
               <div class="form-section">
                 <label class="form-label">Note</label>
                 <div class="note-suggestions" id="noteSuggestions"></div>
@@ -390,10 +403,12 @@
                   oninput="showNoteSuggestions(this.value)"
                 />
               </div>
+
               <div class="form-section">
                 <label class="form-label">Date</label>
                 <input type="date" id="trackDate" class="date-input" />
               </div>
+
               <div class="form-section recurring-section">
                 <label class="toggle-label">
                   <span>Recurring expense</span>
@@ -409,10 +424,12 @@
                   </select>
                 </div>
               </div>
+
               <button class="btn-primary btn-full" onclick="saveExpense()">
                 <span>Save Entry</span>
                 <span class="btn-kanji">記録</span>
               </button>
+
               <div class="csv-section">
                 <button
                   class="btn-ghost"
@@ -450,6 +467,7 @@
             </div>
           </div>
         </section>
+
         <!-- LEDGER  -->
         <section class="screen" id="screen-ledger">
           <div class="screen-scroll">
@@ -464,6 +482,7 @@
                 </button>
               </div>
             </div>
+
             <div class="ledger-plan-card">
               <div class="plan-row">
                 <span>Monthly Income</span>
@@ -483,9 +502,11 @@
                 <span id="ledgerTotalSpent" class="plan-val red">—</span>
               </div>
             </div>
+
             <div class="category-breakdown" id="categoryBreakdown">
               <!-- filled by JS -->
             </div>
+
             <div class="ledger-entries-section">
               <div class="section-header">
                 <span>All Entries</span>
@@ -503,6 +524,7 @@
             </div>
           </div>
         </section>
+
         <!-- REFLECT -->
         <section class="screen" id="screen-reflect">
           <div class="screen-scroll">
@@ -510,6 +532,7 @@
               <h2>Reflect</h2>
               <p>The heart of the Kakeibo method</p>
             </div>
+
             <div class="reflect-tabs">
               <button
                 class="reflect-tab active"
@@ -524,6 +547,7 @@
                 Monthly
               </button>
             </div>
+
             <div class="reflect-content" id="reflectContent">
               <!-- Weekly prompts -->
               <div id="weeklyReflect">
@@ -541,6 +565,7 @@
                   Save Reflection
                 </button>
               </div>
+
               <!-- Monthly prompts -->
               <div id="monthlyReflect" class="hidden">
                 <div
@@ -548,6 +573,7 @@
                   id="monthSummaryReflect"
                 ></div>
                 <div class="prompts-list" id="monthlyPrompts"></div>
+
                 <div class="ai-insight-section">
                   <div class="ai-badge">
                     <svg
@@ -577,6 +603,7 @@
                   <div class="ai-result-text" id="aiResultText"></div>
                 </div> -->
                 </div>
+
                 <button
                   class="btn-primary btn-full"
                   onclick="saveMonthlyReflection()"
@@ -587,6 +614,7 @@
             </div>
           </div>
         </section>
+
         <!-- ═══════════════════════════════ GOALS ═══════════════════════════════ -->
         <section class="screen" id="screen-goals">
           <div class="screen-scroll">
@@ -594,9 +622,11 @@
               <h2>Goals</h2>
               <p>Save with intention, celebrate with joy</p>
             </div>
+
             <button class="btn-primary btn-full" onclick="openGoalModal()">
               + Add New Goal
             </button>
+
             <div id="goalsList" class="goals-list">
               <div class="empty-state">
                 <div class="empty-icon">
@@ -623,6 +653,7 @@
           </div>
         </section>
       </main>
+
       <!-- FAB -->
       <button class="fab" onclick="switchTab('track')" title="Log expense">
         <span class="fab-icon">+</span>
@@ -660,6 +691,7 @@
         </button>
       </nav>
     </div>
+
     <!-- MODALS -->
     <div
       id="modalOverlay"
@@ -914,6 +946,7 @@
               onchange="updateSavingsGoal(this.value)"
             />
           </div>
+
           <div class="settings-section danger-zone">
             <div class="settings-label">Account</div>
             <button class="btn-ghost danger" onclick="signOutUser()">
@@ -935,6 +968,7 @@
               Sign Out
             </button>
           </div>
+
           <div class="settings-section danger-zone">
             <div class="settings-label">Data</div>
             <button class="btn-ghost danger" onclick="clearAllData()">
@@ -943,6 +977,7 @@
           </div>
         </div>
       </div>
+
       <!-- Custom Tag Modal -->
       <div class="modal" id="customTagModal">
         <div class="modal-header">
@@ -963,6 +998,7 @@
           </button>
         </div>
       </div>
+
       <!-- Goal Log Modal -->
       <div class="modal" id="goalLogModal">
         <div class="modal-header">
@@ -987,8 +1023,10 @@
         </div>
       </div>
     </div>
+
     <!-- TOAST -->
     <div id="toast" class="toast hidden"></div>
+
     <!-- CELEBRATION OVERLAY -->
     <div id="celebrationOverlay" class="celebration-overlay hidden">
       <div class="celebration-content">
@@ -996,11 +1034,11 @@
         <div class="celebration-text" id="celebrationText">Goal Reached!</div>
       </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="auth.js"></script>
     <script src="app.js"></script>
-    <script>
-      
-    </script>
+    
+    
   </body>
 </html>
