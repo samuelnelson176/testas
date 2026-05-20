@@ -1715,6 +1715,29 @@ input, select, textarea {
     flex-wrap: wrap;
   }
 
+    .budget-stats {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .stat-row {
+    flex: 0 1 auto;
+    min-width: 70px;
+    justify-content: center;
+  }
+
+  .stat-row:not(:last-child)::after {
+    display: none;
+  }
+
+  .stat-val {
+    font-size: 0.7rem;
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
+  }
+
   .toast {
     white-space: normal;
     text-align: center;
