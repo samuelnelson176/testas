@@ -1,6 +1,6 @@
-const SUPABASE_URL = "https://ofzmavdcuqycdhryspmv.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_06ZSEoZ3BEJdAYgibBkPxg_9lVaYQs6";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const res = await fetch("/.netlify/functions/get-config");
+const config = await res.json();
+const supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
 
 const signupForm = document.getElementById("signup-form");
 if (signupForm) {
