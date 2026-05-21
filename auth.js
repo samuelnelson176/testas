@@ -1,6 +1,8 @@
-const res = await fetch("/.netlify/functions/get-config");
-const config = await res.json();
-const supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
+(async () => {
+  const res = await fetch("/.netlify/functions/get-config");
+  const config = await res.json();
+  const supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
+}) ();
 
 const signupForm = document.getElementById("signup-form");
 if (signupForm) {
