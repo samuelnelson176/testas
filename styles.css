@@ -1658,6 +1658,128 @@ input, select, textarea {
   cursor: not-allowed;
 }
 
+/* Goal Modal */
+#goalModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+#goalModal .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+#goalModal .modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+#goalModal .modal-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#goalModal .modal-close:hover {
+  background: #f3f4f6;
+  color: #1a1a2e;
+}
+
+#goalModal .modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#goalModal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#goalModal .form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+#goalModal .form-group input[type="text"],
+#goalModal .form-group input[type="number"],
+#goalModal .form-group input[type="date"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  background: #f9fafb;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#goalModal .form-group input:focus {
+  border-color: #2D5016;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: #fff;
+}
+
+#goalModal .form-group input::placeholder {
+  color: #9ca3af;
+}
+
+#goalModal .btn-primary {
+  background: #2D5016;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#goalModal .btn-primary:hover {
+  background: #3E6B21;
+}
+
+#goalModal .btn-primary:active {
+  transform: scale(0.98);
+}
+
+#goalModal .btn-full {
+  width: 100%;
+}
+
+/* Modal container card */
+#goalModal > div:not(.modal-header):not(.modal-body),
+#goalModal > .modal-content {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
 /* ----------------------------------------------
    13. ANIMATIONS
    ---------------------------------------------- */
