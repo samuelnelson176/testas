@@ -1,8 +1,10 @@
+let supabaseClient;
+
 (async () => {
   const res = await fetch("/.netlify/functions/get-config");
   const config = await res.json();
-  const supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
-}) ();
+  supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
+})();
 
 const signupForm = document.getElementById("signup-form");
 if (signupForm) {
@@ -27,7 +29,6 @@ if (signinForm) {
 }
 
 async function signUpNewUser(email, password, username, fullName) {
-  // Step 1: Create the user account
   const { data, error } = await supabaseClient.auth.signUp({
     email: email,
     password: password,
@@ -37,10 +38,11 @@ async function signUpNewUser(email, password, username, fullName) {
     alert("Error signing up: " + error.message);
     return;
   } else {
-    alert("Account created! Please check your email to confirm your account.");
+      setTimeout(() => {
+        window.location.href = "main.html";
+      }, 1000);
   }
 
-  // Step 2: If auth is successful, save their name and username to your table
   if (data.user) {
     const { error: profileError } = await supabaseClient
       .from("profiles")
@@ -56,8 +58,8 @@ async function signUpNewUser(email, password, username, fullName) {
       console.error("Error saving profile info:", profileError.message);
     } else {
       setTimeout(() => {
-      window.location.href = "main.html";
-    }, 1000);
+        window.location.href = "main.html";
+      }, 1000);
     }
   }
 }
