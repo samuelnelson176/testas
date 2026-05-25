@@ -1658,29 +1658,40 @@ input, select, textarea {
   cursor: not-allowed;
 }
 
-/* Goal Modal */
+/* Goal Modal — fixed, replaces entire previous block */
 #goalModal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  margin: auto;
+  display: none;
+  animation: slideUp 0.2s ease;
+  background: var(--surface-0);
+  border-radius: var(--radius-xl);
+  max-width: 440px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+#goalModal.active {
+  display: block;
+}
+
+#goalModal .modal-content {
+  width: 100%;
+  overflow: hidden;
 }
 
 #goalModal .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 20px 12px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
 }
 
 #goalModal .modal-header h3 {
+  font-family: var(--font-display);
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1a1a2e;
+  color: var(--text-primary);
   margin: 0;
 }
 
@@ -1688,7 +1699,7 @@ input, select, textarea {
   background: none;
   border: none;
   font-size: 1rem;
-  color: #6b7280;
+  color: var(--text-muted);
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
@@ -1696,76 +1707,99 @@ input, select, textarea {
 }
 
 #goalModal .modal-close:hover {
-  background: #f3f4f6;
-  color: #1a1a2e;
+  background: var(--border);
+  color: var(--text-primary);
 }
 
 #goalModal .modal-body {
-  padding: 20px;
+  padding: 1.25rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
 }
 
 #goalModal .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 #goalModal .form-group label {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #374151;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
 }
 
 #goalModal .form-group input[type="text"],
 #goalModal .form-group input[type="number"],
 #goalModal .form-group input[type="date"] {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  color: #1a1a2e;
-  background: #f9fafb;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background: var(--surface-1);
   outline: none;
   box-sizing: border-box;
+  font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 #goalModal .form-group input:focus {
-  border-color: #2D5016;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  background: #fff;
+  border-color: var(--green-mid);
+  box-shadow: 0 0 0 3px rgba(62, 107, 33, 0.1);
+  background: var(--surface-0);
 }
 
 #goalModal .form-group input::placeholder {
-  color: #9ca3af;
+  color: var(--text-muted);
+  opacity: 0.6;
 }
 
 #goalModal .btn-primary {
-  background: #2D5016;
+  background: var(--forest);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
+  width: 100%;
+  font-family: var(--font-display);
+  letter-spacing: 0.3px;
   transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 4px 12px rgba(45, 80, 22, 0.25);
 }
 
 #goalModal .btn-primary:hover {
-  background: #3E6B21;
+  background: var(--moss);
+  transform: translateY(-1px);
 }
 
 #goalModal .btn-primary:active {
   transform: scale(0.98);
 }
 
-#goalModal .btn-full {
-  width: 100%;
+@media (max-width: 480px) {
+  #goalModal {
+    max-height: 90vh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .modal-overlay {
+    align-items: flex-end;
+  }
 }
 
 /* Modal container card */
