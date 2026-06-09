@@ -1,4 +1,3 @@
-let supabaseClient;
 
 (async () => {
   const res = await fetch("/.netlify/functions/get-config");
