@@ -67,30 +67,10 @@ const CATEGORIES = {
 };
 
 const DEFAULT_SUBTAGS = {
-  needs: [
-    "Rent/Mortgage",
-    "Groceries",
-    "Utilities",
-    "Transport",
-    "Healthcare",
-    "Insurance",
-  ],
-  wants: [
-    "Dining Out",
-    "Shopping",
-    "Entertainment",
-    "Subscriptions",
-    "Beauty",
-    "Hobbies",
-  ],
+  needs: ["Rent/Mortgage", "Groceries", "Utilities", "Transport", "Healthcare", "Insurance"],
+  wants: ["Dining Out", "Shopping", "Entertainment", "Subscriptions", "Beauty", "Hobbies"],
   culture: ["Books", "Art", "Music", "Travel", "Courses", "Museums"],
-  savings: [
-    "Emergency Fund",
-    "Retirement",
-    "Investment",
-    "Goal Deposit",
-    "Debt Payment",
-  ],
+  savings: ["Emergency Fund", "Retirement", "Investment", "Goal Deposit", "Debt Payment"],
 };
 
 const KAKEIBO_QUOTES = [
@@ -140,7 +120,7 @@ let state = {
   baseCurrency: null,
   monthlyIncome: 0,
   savingsGoal: 0,
-  currentDashMonth: null, // 'YYYY-MM'
+  currentDashMonth: null,
   currentLedgerMonth: null,
   currentWeekOffset: 0,
   exchangeRates: {},
@@ -149,7 +129,8 @@ let state = {
   onboardingCurrency: null,
 };
 
-let db; // IndexedDB instance
+let db;
+let supabaseClient; // Declared here, initialized inside init()
 
 // ══════════════════════════════════════════
 // INDEXEDDB SETUP
@@ -259,62 +240,22 @@ async function fetchExchangeRates(base) {
       state.exchangeRates = cached;
       return;
     }
-    // Use a CORS-friendly free API
-    const res = await fetch(
-      `https://api.exchangerate-api.com/v4/latest/${base}`,
-    );
+    const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
     if (!res.ok) throw new Error();
     const data = await res.json();
     state.exchangeRates = data.rates;
     setSetting("rates_cache", data.rates);
     setSetting("rates_time", Date.now());
   } catch {
-    // Fallback: approximate rates vs USD
     const fallback = {
-      USD: 1,
-      EUR: 0.92,
-      GBP: 0.79,
-      JPY: 149.5,
-      CAD: 1.36,
-      AUD: 1.53,
-      CHF: 0.88,
-      CNY: 7.24,
-      INR: 83.1,
-      NGN: 1540,
-      ZAR: 18.6,
-      BRL: 4.97,
-      MXN: 17.1,
-      SGD: 1.34,
-      HKD: 7.82,
-      SEK: 10.4,
-      NOK: 10.6,
-      DKK: 6.9,
-      NZD: 1.63,
-      KRW: 1325,
-      IDR: 15750,
-      MYR: 4.67,
-      PHP: 56.3,
-      THB: 35.2,
-      VND: 24340,
-      AED: 3.67,
-      SAR: 3.75,
-      EGP: 30.9,
-      KES: 152,
-      GHS: 12.4,
-      PKR: 278,
-      BDT: 109,
-      TRY: 30.4,
-      PLN: 3.97,
-      CZK: 22.8,
-      HUF: 356,
-      RON: 4.6,
-      UAH: 38.2,
-      CLP: 895,
-      COP: 3920,
-      PEN: 3.72,
-      ARS: 350,
+      USD: 1, EUR: 0.92, GBP: 0.79, JPY: 149.5, CAD: 1.36, AUD: 1.53,
+      CHF: 0.88, CNY: 7.24, INR: 83.1, NGN: 1540, ZAR: 18.6, BRL: 4.97,
+      MXN: 17.1, SGD: 1.34, HKD: 7.82, SEK: 10.4, NOK: 10.6, DKK: 6.9,
+      NZD: 1.63, KRW: 1325, IDR: 15750, MYR: 4.67, PHP: 56.3, THB: 35.2,
+      VND: 24340, AED: 3.67, SAR: 3.75, EGP: 30.9, KES: 152, GHS: 12.4,
+      PKR: 278, BDT: 109, TRY: 30.4, PLN: 3.97, CZK: 22.8, HUF: 356,
+      RON: 4.6, UAH: 38.2, CLP: 895, COP: 3920, PEN: 3.72, ARS: 350,
     };
-    // Convert to base currency
     const baseRate = fallback[base] || 1;
     state.exchangeRates = {};
     for (const [k, v] of Object.entries(fallback)) {
@@ -334,16 +275,9 @@ function formatMoney(amount, currencyCode) {
   const code = currencyCode || state.baseCurrency;
   const sym = getCurrencySymbol(code);
   const n = parseFloat(amount) || 0;
-  // For large-unit currencies (JPY, KRW, etc.)
   const noDecimal = ["JPY", "KRW", "IDR", "VND", "HUF"];
   const decimals = noDecimal.includes(code) ? 0 : 2;
-  return (
-    sym +
-    n.toLocaleString(undefined, {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    })
-  );
+  return sym + n.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 }
 
 function getCurrentMonth() {
@@ -388,16 +322,12 @@ function selectOnboardingCurrency(code) {
   state.onboardingCurrency = code;
   renderCurrencyList(document.getElementById("currencySearch").value);
   document.getElementById("currencyNextBtn").disabled = false;
-  document.getElementById("incomeCurrencyPrefix").textContent =
-    getCurrencySymbol(code);
-  document.getElementById("savingsCurrencyPrefix").textContent =
-    getCurrencySymbol(code);
+  document.getElementById("incomeCurrencyPrefix").textContent = getCurrencySymbol(code);
+  document.getElementById("savingsCurrencyPrefix").textContent = getCurrencySymbol(code);
 }
 
 function nextStep(n) {
-  document
-    .querySelectorAll(".onboarding-step")
-    .forEach((s) => s.classList.remove("active"));
+  document.querySelectorAll(".onboarding-step").forEach((s) => s.classList.remove("active"));
   document.getElementById("step-" + n).classList.add("active");
   document.querySelectorAll(".dot").forEach((d, i) => {
     d.classList.toggle("active", i < n);
@@ -405,8 +335,7 @@ function nextStep(n) {
 }
 
 async function completeOnboarding() {
-  const income =
-    parseFloat(document.getElementById("monthlyIncome").value) || 0;
+  const income = parseFloat(document.getElementById("monthlyIncome").value) || 0;
   const savings = parseFloat(document.getElementById("savingsGoal").value) || 0;
 
   state.baseCurrency = state.onboardingCurrency || "USD";
@@ -441,12 +370,10 @@ function populateCurrencySelects() {
     const el = document.getElementById(id);
     if (!el) return;
     el.innerHTML = CURRENCIES.map(
-      (c) =>
-        `<option value="${c.code}" ${c.code === state.baseCurrency ? "selected" : ""}>${c.code} ${c.symbol}</option>`,
+      (c) => `<option value="${c.code}" ${c.code === state.baseCurrency ? "selected" : ""}>${c.code} ${c.symbol}</option>`,
     ).join("");
   });
 
-  // Settings values
   const settingsIncome = document.getElementById("settingsIncome");
   const settingsSavings = document.getElementById("settingsSavings");
   if (settingsIncome) settingsIncome.value = state.monthlyIncome || "";
@@ -462,12 +389,8 @@ function setTodayDate() {
 // NAVIGATION
 // ══════════════════════════════════════════
 function switchTab(tab) {
-  document
-    .querySelectorAll(".screen")
-    .forEach((s) => s.classList.remove("active"));
-  document
-    .querySelectorAll(".nav-item")
-    .forEach((n) => n.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
 
   document.getElementById("screen-" + tab)?.classList.add("active");
   document.getElementById("nav-" + tab)?.classList.add("active");
@@ -492,30 +415,22 @@ async function renderDashboard() {
   const month = state.currentDashMonth;
   document.getElementById("dashMonth").textContent = formatMonthDisplay(month);
 
-  // Quote
   const qi = Math.floor(Date.now() / 86400000) % KAKEIBO_QUOTES.length;
   document.getElementById("kakeiboQuote").textContent = KAKEIBO_QUOTES[qi];
 
-  // Daily prompt
   const dp = DAILY_PROMPTS[new Date().getDay() % DAILY_PROMPTS.length];
   document.getElementById("dailyPrompt").textContent = dp;
 
-  // Income / savings for this month
   const income = getSetting("income_" + month) || state.monthlyIncome || 0;
   const savingsGoal = getSetting("savings_" + month) || state.savingsGoal || 0;
 
-  // Get expenses
   const expenses = await dbGetByIndex("expenses", "month", month);
-  const totalSpent = expenses.reduce(
-    (sum, e) => sum + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
+  const totalSpent = expenses.reduce((sum, e) => sum + (parseFloat(e.baseAmount) || 0), 0);
   const savedAmount = expenses
     .filter((e) => e.category === "savings")
     .reduce((sum, e) => sum + (parseFloat(e.baseAmount) || 0), 0);
   const remaining = income - totalSpent;
 
-  // Update stats
   document.getElementById("statIncome").textContent = formatMoney(income);
   document.getElementById("statSpent").textContent = formatMoney(totalSpent);
   document.getElementById("statSaved").textContent = formatMoney(savedAmount);
@@ -523,18 +438,13 @@ async function renderDashboard() {
   const spentRing = document.getElementById("spentRingAmount");
   if (spentRing) spentRing.textContent = formatMoney(totalSpent);
 
-  // Draw ring chart
   drawBudgetRing(totalSpent, income);
 
-  // Category cards
   const catGrid = document.getElementById("categoriesGrid");
   catGrid.innerHTML = Object.entries(CATEGORIES)
     .map(([key, cat]) => {
       const catExpenses = expenses.filter((e) => e.category === key);
-      const catTotal = catExpenses.reduce(
-        (s, e) => s + (parseFloat(e.baseAmount) || 0),
-        0,
-      );
+      const catTotal = catExpenses.reduce((s, e) => s + (parseFloat(e.baseAmount) || 0), 0);
       const pct = income > 0 ? Math.min(100, (catTotal / income) * 100) : 0;
       return `
       <div class="cat-card" data-cat="${key}" onclick="switchTab('ledger')">
@@ -547,15 +457,11 @@ async function renderDashboard() {
         <div class="cat-progress">
           <div class="cat-progress-fill" style="width:${pct}%; background:${cat.color}"></div>
         </div>
-      </div>
-    `;
+      </div>`;
     })
     .join("");
 
-  // Recent expenses
-  const recent = [...expenses]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 5);
+  const recent = [...expenses].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
   renderExpenseList("recentExpensesList", recent, true);
 }
 
@@ -563,20 +469,13 @@ function drawBudgetRing(spent, income) {
   const canvas = document.getElementById("budgetRing");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  const cx = 80,
-    cy = 80,
-    r = 68,
-    lw = 10;
+  const cx = 80, cy = 80, r = 68, lw = 10;
 
   ctx.clearRect(0, 0, 160, 160);
 
-  // Background ring
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.strokeStyle =
-    getComputedStyle(document.documentElement)
-      .getPropertyValue("--border")
-      .trim() || "#e0e0d8";
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--border").trim() || "#e0e0d8";
   ctx.lineWidth = lw;
   ctx.stroke();
 
@@ -600,9 +499,7 @@ function drawBudgetRing(spent, income) {
 let selectedCategory = "needs";
 
 function selectCategory(btn, cat) {
-  document
-    .querySelectorAll(".cat-btn")
-    .forEach((b) => b.classList.remove("active"));
+  document.querySelectorAll(".cat-btn").forEach((b) => b.classList.remove("active"));
   btn.classList.add("active");
   selectedCategory = cat;
   renderAllSubtags();
@@ -670,16 +567,12 @@ async function saveExpense() {
   const amount = parseFloat(document.getElementById("trackAmount").value);
   const currency = document.getElementById("trackCurrency").value;
   const note = document.getElementById("trackNote").value.trim();
-  const date =
-    document.getElementById("trackDate").value ||
-    new Date().toISOString().split("T")[0];
+  const date = document.getElementById("trackDate").value || new Date().toISOString().split("T")[0];
   const subTag = document.getElementById("subTagSelect").value;
   const isRecurring =
     document.getElementById("recurringOpts") &&
     !document.getElementById("recurringOpts").classList.contains("hidden");
-  const recurringFreq = isRecurring
-    ? document.getElementById("recurringFreq").value
-    : null;
+  const recurringFreq = isRecurring ? document.getElementById("recurringFreq").value : null;
 
   if (!amount || amount <= 0) {
     showToast("Please enter an amount");
@@ -705,9 +598,8 @@ async function saveExpense() {
   };
 
   await dbPut("expenses", expense);
-  showToast("✓ Entry saved");
+  showToast("Entry saved");
 
-  // Reset form
   document.getElementById("trackAmount").value = "";
   document.getElementById("trackNote").value = "";
   document.getElementById("noteSuggestions").innerHTML = "";
@@ -729,8 +621,7 @@ function changeLedgerMonth(dir) {
 
 async function renderLedger() {
   const month = state.currentLedgerMonth;
-  document.getElementById("ledgerMonth").textContent =
-    formatMonthDisplay(month);
+  document.getElementById("ledgerMonth").textContent = formatMonthDisplay(month);
 
   const income = getSetting("income_" + month) || state.monthlyIncome || 0;
   const savingsGoal = getSetting("savings_" + month) || state.savingsGoal || 0;
@@ -738,20 +629,13 @@ async function renderLedger() {
 
   const filterVal = document.getElementById("ledgerFilter")?.value || "all";
   let expenses = await dbGetByIndex("expenses", "month", month);
-  const totalSpent = expenses.reduce(
-    (s, e) => s + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
+  const totalSpent = expenses.reduce((s, e) => s + (parseFloat(e.baseAmount) || 0), 0);
 
   document.getElementById("ledgerIncome").textContent = formatMoney(income);
-  document.getElementById("ledgerSavingsGoal").textContent =
-    formatMoney(savingsGoal);
-  document.getElementById("ledgerAvailable").textContent =
-    formatMoney(available);
-  document.getElementById("ledgerTotalSpent").textContent =
-    formatMoney(totalSpent);
+  document.getElementById("ledgerSavingsGoal").textContent = formatMoney(savingsGoal);
+  document.getElementById("ledgerAvailable").textContent = formatMoney(available);
+  document.getElementById("ledgerTotalSpent").textContent = formatMoney(totalSpent);
 
-  // Category breakdown
   const breakdown = document.getElementById("categoryBreakdown");
   breakdown.innerHTML = Object.entries(CATEGORIES)
     .map(([key, cat]) => {
@@ -770,19 +654,12 @@ async function renderLedger() {
         <div class="cat-breakdown-bar">
           <div class="cat-breakdown-fill" style="width:${pct}%; background:${cat.color}"></div>
         </div>
-      </div>
-    `;
+      </div>`;
     })
     .join("");
 
-  // Filtered list
-  const filtered =
-    filterVal === "all"
-      ? expenses
-      : expenses.filter((e) => e.category === filterVal);
-  const sorted = [...filtered].sort(
-    (a, b) => new Date(b.date) - new Date(a.date),
-  );
+  const filtered = filterVal === "all" ? expenses : expenses.filter((e) => e.category === filterVal);
+  const sorted = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
   renderExpenseList("ledgerList", sorted, false);
 }
 
@@ -802,10 +679,7 @@ function renderExpenseList(containerId, expenses, compact) {
     .map((e) => {
       const cat = CATEGORIES[e.category] || CATEGORIES.needs;
       const tag = e.subTag ? ` · ${e.subTag}` : "";
-      const diff =
-        e.currency !== state.baseCurrency
-          ? ` (${getCurrencySymbol(e.currency)}${e.amount})`
-          : "";
+      const diff = e.currency !== state.baseCurrency ? ` (${getCurrencySymbol(e.currency)}${e.amount})` : "";
       return `
       <div class="expense-item">
         <div class="expense-cat-dot" style="background:${cat.color}"></div>
@@ -832,16 +706,10 @@ async function deleteExpense(id, event) {
 // REFLECT
 // ══════════════════════════════════════════
 function switchReflectTab(btn, tab) {
-  document
-    .querySelectorAll(".reflect-tab")
-    .forEach((t) => t.classList.remove("active"));
+  document.querySelectorAll(".reflect-tab").forEach((t) => t.classList.remove("active"));
   btn.classList.add("active");
-  document
-    .getElementById("weeklyReflect")
-    .classList.toggle("hidden", tab !== "weekly");
-  document
-    .getElementById("monthlyReflect")
-    .classList.toggle("hidden", tab !== "monthly");
+  document.getElementById("weeklyReflect").classList.toggle("hidden", tab !== "weekly");
+  document.getElementById("monthlyReflect").classList.toggle("hidden", tab !== "monthly");
   if (tab === "weekly") renderWeeklyReflect();
   else renderMonthlyReflect();
 }
@@ -875,19 +743,13 @@ async function renderWeeklyReflect() {
   const endStr = end.toISOString().split("T")[0];
 
   const allExpenses = await dbGetAll("expenses");
-  const weekExpenses = allExpenses.filter(
-    (e) => e.date >= startStr && e.date <= endStr,
-  );
-  const weekTotal = weekExpenses.reduce(
-    (s, e) => s + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
+  const weekExpenses = allExpenses.filter((e) => e.date >= startStr && e.date <= endStr);
+  const weekTotal = weekExpenses.reduce((s, e) => s + (parseFloat(e.baseAmount) || 0), 0);
 
   document.getElementById("weekSummary").innerHTML = weekExpenses.length
     ? `This week: <strong>${weekExpenses.length} entries</strong>, total <strong>${formatMoney(weekTotal)}</strong>`
     : "No expenses recorded this week.";
 
-  // Load saved reflection
   const reflId = "weekly_" + startStr;
   const saved = await dbGet("reflections", reflId);
   const answers = saved ? saved.answers : {};
@@ -897,18 +759,14 @@ async function renderWeeklyReflect() {
     <div class="prompt-item">
       <div class="prompt-question">${q}</div>
       <textarea class="prompt-answer" id="wp_${i}" placeholder="Write your reflection...">${answers[i] || ""}</textarea>
-    </div>
-  `,
+    </div>`,
   ).join("");
 }
 
 async function renderMonthlyReflect() {
   const month = state.currentDashMonth;
   const expenses = await dbGetByIndex("expenses", "month", month);
-  const total = expenses.reduce(
-    (s, e) => s + (parseFloat(e.baseAmount) || 0),
-    0,
-  );
+  const total = expenses.reduce((s, e) => s + (parseFloat(e.baseAmount) || 0), 0);
   const income = getSetting("income_" + month) || state.monthlyIncome || 0;
   const saved = income - total;
 
@@ -926,8 +784,7 @@ async function renderMonthlyReflect() {
     <div class="prompt-item">
       <div class="prompt-question">${q}</div>
       <textarea class="prompt-answer" id="mp_${i}" placeholder="Write your reflection...">${answers[i] || ""}</textarea>
-    </div>
-  `,
+    </div>`,
   ).join("");
 }
 
@@ -944,12 +801,8 @@ async function saveWeeklyReflection() {
     const el = document.getElementById("wp_" + i);
     if (el) answers[i] = el.value;
   });
-  await dbPut("reflections", {
-    id: reflId,
-    answers,
-    savedAt: new Date().toISOString(),
-  });
-  showToast("✓ Weekly reflection saved");
+  await dbPut("reflections", { id: reflId, answers, savedAt: new Date().toISOString() });
+  showToast("Weekly reflection saved");
 }
 
 async function saveMonthlyReflection() {
@@ -960,12 +813,8 @@ async function saveMonthlyReflection() {
     const el = document.getElementById("mp_" + i);
     if (el) answers[i] = el.value;
   });
-  await dbPut("reflections", {
-    id: reflId,
-    answers,
-    savedAt: new Date().toISOString(),
-  });
-  showToast("✓ Monthly reflection saved");
+  await dbPut("reflections", { id: reflId, answers, savedAt: new Date().toISOString() });
+  showToast("Monthly reflection saved");
 }
 
 async function generateAIInsight() {
@@ -981,23 +830,16 @@ async function generateAIInsight() {
     const month = state.currentDashMonth;
     const expenses = await dbGetByIndex("expenses", "month", month);
     const income = getSetting("income_" + month) || state.monthlyIncome || 0;
-    const total = expenses.reduce(
-      (s, e) => s + (parseFloat(e.baseAmount) || 0),
-      0,
-    );
+    const total = expenses.reduce((s, e) => s + (parseFloat(e.baseAmount) || 0), 0);
     const saved = Math.max(0, income - total);
 
-    // Get reflection answers
     const reflId = "monthly_" + month;
     const savedRefl = await dbGet("reflections", reflId);
     const answers = savedRefl ? savedRefl.answers : {};
     const reflectionText = MONTHLY_PROMPTS.map((q, i) =>
       answers[i] ? `Q: ${q}\nA: ${answers[i]}` : "",
-    )
-      .filter(Boolean)
-      .join("\n\n");
+    ).filter(Boolean).join("\n\n");
 
-    // Category breakdown
     const catBreakdown = Object.entries(CATEGORIES)
       .map(([key, cat]) => {
         const catTotal = expenses
@@ -1037,7 +879,6 @@ Keep it personal, warm, and under 200 words. Do not use bullet points.`;
 
     const data = await res.json();
 
-    // Server returned an error (e.g. 429)
     if (data.error) {
       showToast(data.error);
       btnText.textContent = "Generate Insight";
@@ -1045,9 +886,7 @@ Keep it personal, warm, and under 200 words. Do not use bullet points.`;
       return;
     }
 
-    const text =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Unable to generate insight at this time.";
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Unable to generate insight at this time.";
     resultText.textContent = text;
     resultDiv.classList.remove("hidden");
     showToast("AI insight ready");
@@ -1113,21 +952,12 @@ async function saveGoal() {
     state.selectedGoalEmoji ||
     `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/></svg>`;
 
-  if (!name) {
-    showToast("Please enter a goal name");
-    return;
-  }
-  if (!target || target <= 0) {
-    showToast("Please enter a target amount");
-    return;
-  }
+  if (!name) { showToast("Please enter a goal name"); return; }
+  if (!target || target <= 0) { showToast("Please enter a target amount"); return; }
 
   const goal = {
     id: Date.now().toString(),
-    name,
-    target,
-    deadline,
-    emoji,
+    name, target, deadline, emoji,
     current: 0,
     currency: state.baseCurrency,
     createdAt: new Date().toISOString(),
@@ -1182,10 +1012,9 @@ async function renderGoals() {
         </div>
         ${
           !completed
-            ? `
-        <div class="goal-card-footer">
-          <button class="goal-log-btn" onclick="openGoalLog('${g.id}')">+ Add Progress</button>
-        </div>`
+            ? `<div class="goal-card-footer">
+                <button class="goal-log-btn" onclick="openGoalLog('${g.id}')">+ Add Progress</button>
+               </div>`
             : `<div style="text-align:center;font-size:13px;color:var(--positive);margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;"><svg viewBox='0 0 24 24' width='14' height='14' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'/></svg> Goal achieved!</div>`
         }
       </div>`;
@@ -1202,10 +1031,7 @@ function openGoalLog(goalId) {
 async function logGoalProgress() {
   const id = document.getElementById("goalLogId").value;
   const amount = parseFloat(document.getElementById("goalLogAmount").value);
-  if (!amount || amount <= 0) {
-    showToast("Enter a valid amount");
-    return;
-  }
+  if (!amount || amount <= 0) { showToast("Enter a valid amount"); return; }
 
   const goal = await dbGet("goals", id);
   if (!goal) return;
@@ -1218,7 +1044,7 @@ async function logGoalProgress() {
   if (goal.current >= goal.target) {
     celebrate(goal.emoji, `${goal.name} Complete!`);
   } else {
-    showToast(`✓ Progress logged: ${formatMoney(amount)}`);
+    showToast(`Progress logged: ${formatMoney(amount)}`);
   }
 }
 
@@ -1228,32 +1054,19 @@ async function deleteGoal(id) {
   showToast("Goal removed");
 }
 
+// ══════════════════════════════════════════
 // CSV IMPORT / EXPORT
-
+// ══════════════════════════════════════════
 async function exportCSV() {
   const all = await dbGetAll("expenses");
-  if (!all.length) {
-    showToast("No data to export");
-    return;
-  }
-  const header =
-    "date,amount,currency,baseAmount,baseCurrency,category,subTag,note,recurring";
+  if (!all.length) { showToast("No data to export"); return; }
+  const header = "date,amount,currency,baseAmount,baseCurrency,category,subTag,note,recurring";
   const rows = all.map((e) =>
-    [
-      e.date,
-      e.amount,
-      e.currency,
-      e.baseAmount,
-      state.baseCurrency,
-      e.category,
-      e.subTag || "",
-      (e.note || "").replace(/,/g, ""),
-      e.recurring || false,
-    ].join(","),
+    [e.date, e.amount, e.currency, e.baseAmount, state.baseCurrency, e.category, e.subTag || "", (e.note || "").replace(/,/g, ""), e.recurring || false].join(","),
   );
   const csv = [header, ...rows].join("\n");
   downloadFile(csv, "kakeibo_export.csv", "text/csv");
-  showToast("✓ CSV exported");
+  showToast("CSV exported");
 }
 
 function importCSV(event) {
@@ -1266,8 +1079,7 @@ function importCSV(event) {
     for (let i = 1; i < lines.length; i++) {
       const cols = lines[i].split(",");
       if (cols.length < 4) continue;
-      const [date, amount, currency, baseAmount, , category, subTag, note] =
-        cols;
+      const [date, amount, currency, baseAmount, , category, subTag, note] = cols;
       const month = (date || "").substring(0, 7);
       if (!month) continue;
       await dbPut("expenses", {
@@ -1284,7 +1096,7 @@ function importCSV(event) {
       });
       count++;
     }
-    showToast(`✓ Imported ${count} entries`);
+    showToast(`Imported ${count} entries`);
     renderDashboard();
     event.target.value = "";
   };
@@ -1306,24 +1118,17 @@ function downloadFile(content, filename, type) {
 // ══════════════════════════════════════════
 // CUSTOM TAGS
 // ══════════════════════════════════════════
-function openCustomTag() {
-  showModal("customTagModal");
-}
+function openCustomTag() { showModal("customTagModal"); }
 
 function saveCustomTag() {
   const val = document.getElementById("customTagInput").value.trim();
-  if (!val) {
-    showToast("Enter a tag name");
-    return;
-  }
+  if (!val) { showToast("Enter a tag name"); return; }
   const key = "custom_tags_" + selectedCategory;
   const existing = getSetting(key) || [];
-  if (!existing.includes(val)) {
-    setSetting(key, [...existing, val]);
-  }
+  if (!existing.includes(val)) { setSetting(key, [...existing, val]); }
   renderAllSubtags();
   closeAllModals();
-  showToast(`✓ Tag "${val}" added`);
+  showToast(`Tag "${val}" added`);
 }
 
 // ══════════════════════════════════════════
@@ -1383,10 +1188,8 @@ function toggleTheme() {
     light: `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" fill="#C0C0C0"/></svg>`,
     dark: `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="#FF8C00"/></svg>`,
   };
-
-  document.getElementById("themeBtn").innerHTML =
-    newTheme === "dark" ? icons.dark : icons.light;
-  setTimeout(() => renderDashboard(), 50); // redraw canvas with new colors
+  document.getElementById("themeBtn").innerHTML = newTheme === "dark" ? icons.dark : icons.light;
+  setTimeout(() => renderDashboard(), 50);
 }
 
 // ══════════════════════════════════════════
@@ -1394,25 +1197,22 @@ function toggleTheme() {
 // ══════════════════════════════════════════
 function showModal(id) {
   document.getElementById("modalOverlay").classList.remove("hidden");
-  document
-    .querySelectorAll(".modal")
-    .forEach((m) => m.classList.remove("active"));
+  document.querySelectorAll(".modal").forEach((m) => m.classList.remove("active"));
   document.getElementById(id)?.classList.add("active");
 }
 
 function closeAllModals() {
   document.getElementById("modalOverlay").classList.add("hidden");
-  document
-    .querySelectorAll(".modal")
-    .forEach((m) => m.classList.remove("active"));
+  document.querySelectorAll(".modal").forEach((m) => m.classList.remove("active"));
 }
 
 function closeModal(e) {
   if (e.target === document.getElementById("modalOverlay")) closeAllModals();
 }
 
+// ══════════════════════════════════════════
 // TOAST
-
+// ══════════════════════════════════════════
 let toastTimer;
 function showToast(msg) {
   const toast = document.getElementById("toast");
@@ -1425,8 +1225,7 @@ function showToast(msg) {
 function celebrate(emoji, text) {
   const overlay = document.getElementById("celebrationOverlay");
   document.getElementById("celebrationEmoji").innerHTML = emoji || `<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
-  document.getElementById("celebrationText").textContent =
-    text || "Goal Achieved!";
+  document.getElementById("celebrationText").textContent = text || "Goal Achieved!";
   overlay.classList.remove("hidden");
   setTimeout(() => overlay.classList.add("hidden"), 3500);
 }
@@ -1435,11 +1234,19 @@ document.getElementById("celebrationOverlay")?.addEventListener("click", () => {
   document.getElementById("celebrationOverlay").classList.add("hidden");
 });
 
+// ══════════════════════════════════════════
+// INIT — Supabase is initialized first, everything else waits
+// ══════════════════════════════════════════
 async function init() {
-  // 1. Initialize local Database (IndexedDB)
+  // 1. Initialize Supabase client BEFORE anything else touches it
+  const configRes = await fetch("/.netlify/functions/get-config");
+  const config = await configRes.json();
+  supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
+
+  // 2. Initialize local IndexedDB
   await initDB();
 
-  // 2. Restore Theme from local settings
+  // 3. Restore theme
   const savedTheme = getSetting("theme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
   const themeBtn = document.getElementById("themeBtn");
@@ -1449,20 +1256,17 @@ async function init() {
   };
   if (themeBtn) themeBtn.innerHTML = savedTheme === "dark" ? icons.dark : icons.light;
 
-  // 3. Set current time context
+  // 4. Set current time context
   state.currentDashMonth = getCurrentMonth();
   state.currentLedgerMonth = getCurrentMonth();
 
-  // 4. Listen for Supabase Auth Changes (The "Source of Truth")
+  // 5. Listen for auth state changes — supabaseClient is guaranteed ready here
   supabaseClient.auth.onAuthStateChange(async (event, session) => {
     const onboarding = document.getElementById("onboarding");
 
     if (session) {
-      // USER LOGGED IN
       state.user = session.user;
-      console.log("Session active for:", session.user.email);
 
-      // Fetch profile from Supabase
       const { data } = await supabaseClient
         .from("profiles")
         .select("username, full_name")
@@ -1471,7 +1275,6 @@ async function init() {
 
       if (data) state.profile = data;
 
-      // Setup App State
       const baseCurrency = getSetting("baseCurrency") || "USD";
       state.baseCurrency = baseCurrency;
       state.monthlyIncome = getSetting("income_" + state.currentDashMonth) || 0;
@@ -1481,21 +1284,16 @@ async function init() {
 
       const onboarded = getSetting("onboarded");
       if (!onboarded) {
-        // First time user — show onboarding
         if (onboarding) onboarding.classList.remove("hidden");
         renderCurrencyList();
       } else {
-        // Returning user — go straight to app
         if (onboarding) onboarding.classList.add("hidden");
         launchApp();
       }
-
     } else {
-      // USER LOGGED OUT
       state.user = null;
       state.profile = null;
-      
-      // Check if they've at least finished local onboarding before showing overlay
+
       const onboarded = getSetting("onboarded");
       if (!onboarded) {
         if (onboarding) onboarding.classList.remove("hidden");
@@ -1503,24 +1301,21 @@ async function init() {
       }
     }
   });
-};
+}
 
 init();
 
-// Keyboard support
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeAllModals();
 });
 
-
-// Add this helper for "Exponential Backoff"
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function fetchWithRetry(url, options, retries = 3) {
   for (let i = 0; i < retries; i++) {
     const res = await fetch(url, options);
     if (res.status === 429) {
-      const waitTime = Math.pow(2, i) * 1000; // Wait 1s, then 2s, then 4s
+      const waitTime = Math.pow(2, i) * 1000;
       console.log(`Rate limited. Retrying in ${waitTime}ms...`);
       await sleep(waitTime);
       continue;
