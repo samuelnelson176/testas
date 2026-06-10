@@ -1,9 +1,13 @@
-
 (async () => {
   const res = await fetch("/.netlify/functions/get-config");
   const config = await res.json();
   supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
 })();
+
+function showAlert(message) {
+  document.getElementById("alertModalText").textContent = message;
+  document.getElementById("alertModal").style.display = "flex";
+}
 
 const signupForm = document.getElementById("signup-form");
 if (signupForm) {
@@ -29,52 +33,36 @@ if (signinForm) {
 
 async function signUpNewUser(email, password, username, fullName) {
   const { data, error } = await supabaseClient.auth.signUp({
-    email: email,
-    password: password,
+    email, password,
   });
 
   if (error) {
-    alert("Error signing up: " + error.message);
+    showAlert("Error signing up: " + error.message);
     return;
-  } else {
-      setTimeout(() => {
-        window.location.href = "main.html";
-      }, 1000);
   }
 
   if (data.user) {
     const { error: profileError } = await supabaseClient
       .from("profiles")
-      .insert([
-        {
-          id: data.user.id,
-          username: username,
-          full_name: fullName,
-        },
-      ]);
+      .insert([{ id: data.user.id, username, full_name: fullName }]);
 
     if (profileError) {
-      console.error("Error saving profile info:", profileError.message);
-    } else {
-      setTimeout(() => {
-        window.location.href = "main.html";
-      }, 1000);
+      console.error("Error saving profile:", profileError.message);
     }
   }
+
+  setTimeout(() => { window.location.href = "main.html"; }, 1000);
 }
 
 async function signInUser(email, password) {
   const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: email,
-    password: password,
+    email, password,
   });
 
   if (error) {
-    alert("Login failed: " + error.message);
+    showAlert("Login failed: " + error.message);
   } else {
-    setTimeout(() => {
-      window.location.href = "main.html";
-    }, 1000);
+    setTimeout(() => { window.location.href = "main.html"; }, 1000);
   }
 }
 
@@ -83,4 +71,4 @@ async function signOutUser() {
   if (!error) {
     window.location.href = "signin.html";
   }
-}
+         }
