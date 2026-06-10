@@ -215,8 +215,7 @@ body.auth-body {
   transform: translateY(0);
 }
 
-
-/*  Alert Modal  */
+/* ── ALERT MODAL ── */
 .alert-modal-overlay {
   display: none;
   position: fixed;
@@ -230,26 +229,27 @@ body.auth-body {
   display: flex;
 }
 .alert-modal-card {
-  background: var(--surface, #fff);
-  border-radius: 14px;
+  background: var(--surface-0);
+  border-radius: var(--radius-md);
   padding: 32px 24px 24px;
   max-width: 340px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
 }
 .alert-modal-text {
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
-  color: var(--text, #333);
+  color: var(--text-primary);
   line-height: 1.6;
   margin-bottom: 24px;
 }
 .alert-modal-btn {
-  background: #2D5016;
+  background: var(--green-deep);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 10px 36px;
   font-size: 15px;
   font-family: 'DM Sans', sans-serif;
@@ -259,7 +259,6 @@ body.auth-body {
 .alert-modal-btn:hover {
   opacity: 0.88;
 }
-
 
 /* ── FOOTER ── */
 .auth-footer {
