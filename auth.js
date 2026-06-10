@@ -6,7 +6,11 @@
 
 function showAlert(message) {
   document.getElementById("alertModalText").textContent = message;
-  document.getElementById("alertModal").style.display = "flex";
+  document.getElementById("alertModal").classList.add("visible");
+}
+
+function closeAlert() {
+  document.getElementById("alertModal").classList.remove("visible");
 }
 
 const signupForm = document.getElementById("signup-form");
@@ -32,9 +36,7 @@ if (signinForm) {
 }
 
 async function signUpNewUser(email, password, username, fullName) {
-  const { data, error } = await supabaseClient.auth.signUp({
-    email, password,
-  });
+  const { data, error } = await supabaseClient.auth.signUp({ email, password });
 
   if (error) {
     showAlert("Error signing up: " + error.message);
@@ -55,9 +57,7 @@ async function signUpNewUser(email, password, username, fullName) {
 }
 
 async function signInUser(email, password) {
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email, password,
-  });
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
   if (error) {
     showAlert("Login failed: " + error.message);
@@ -71,4 +71,4 @@ async function signOutUser() {
   if (!error) {
     window.location.href = "signin.html";
   }
-         }
+}
